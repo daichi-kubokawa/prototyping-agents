@@ -8,7 +8,7 @@
 ```
 MODE              DRAFT | DEVELOP         実行モード（§2）
 PROJECT_NAME      文字列                   プロダクト名
-PROJECT_SLUG      半角英小文字・ハイフン      出力先 → projects/<slug>/
+OUTPUT_DIR        相対パス                 成果物の出力先ディレクトリ
 PROJECT_SUMMARY   文字列                   一行概要
 FIGJAM_URL        URL                     ヒアリング整理先（Figma MCP 経由で取得）
 RAW_HEARING_MEMO  文字列 or ファイルパス      FigJam が使えないときの入力
@@ -16,7 +16,17 @@ RAW_HEARING_MEMO  文字列 or ファイルパス      FigJam が使えないと
 
 - `MODE` はコマンド（`/draft` `/develop`）が設定する。`local_env.json` には不要
 - `RAW_HEARING_MEMO` は `$ARGUMENTS`（コマンドの引数）で上書きされる。**引数が優先**
-- `PROJECT_SLUG` が未設定だと出力先が決まらず実行できない
+- `OUTPUT_DIR` が未設定だと出力先が決まらず実行できない
+
+### `OUTPUT_DIR` の決め方
+
+本リポジトリは**雛形と実演を同居させる**ため、案件ごとにサブディレクトリを切る。
+実案件では **1リポジトリ = 1案件**とし、リポジトリ直下に近い場所へ出力する。
+
+```
+examples/<案件名>    本リポジトリ（複数の実演を並べて比較するため）
+spec                 実案件（Template から生成した専用リポジトリ）
+```
 
 # 2. 二周構造 ―― DRAFT パスと DEVELOP パス
 
@@ -75,7 +85,7 @@ RAW_HEARING_MEMO  文字列 or ファイルパス      FigJam が使えないと
   推測は **Assumptions**、不足は **Open Questions** として明示する。
 
 - **案件層はゼロから生成される**：
-  `projects/{{PROJECT_SLUG}}/` は実行時に新規作成する。実行前にこの配下へ何かを置いてはならない。
+  `{{OUTPUT_DIR}}/` は実行時に新規作成する。実行前にこの配下へ何かを置いてはならない。
 
 - **整合性の優先順位**：
   1. `briefing.md` → 2. `requirements.md` → 3. `design.md` → 4. `Guidelines.md`
@@ -93,7 +103,7 @@ RAW_HEARING_MEMO  文字列 or ファイルパス      FigJam が使えないと
 │
 ├── prompts/inception_briefing.md      ★本プロンプト
 │
-└── projects/{{PROJECT_SLUG}}/         案件層
+└── {{OUTPUT_DIR}}/                    案件層
     │                                     ★ディレクトリごと DR-1 で新規作成する
     ├── briefing.md                    【DR-1】SSoT — Why & Who
     ├── review_history.md              【全工程】レビュー履歴・改修ログ（追記のみ）
@@ -118,7 +128,7 @@ RAW_HEARING_MEMO  文字列 or ファイルパス      FigJam が使えないと
 
 ### DR-1. 原点構築（`product-agent`）
 
-`projects/{{PROJECT_SLUG}}/` をディレクトリごと新規作成し、`briefing.md` を生成する。
+`{{OUTPUT_DIR}}/` をディレクトリごと新規作成し、`briefing.md` を生成する。
 
 - 入力は Figma MCP 経由の `FIGJAM_URL`。MCP が使えない場合は `RAW_HEARING_MEMO` へ即座にフォールバックする
 - **MCP の接続で立ち止まらない。** 2回失敗したらフォールバックへ切り替える

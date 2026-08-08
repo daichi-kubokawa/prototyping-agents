@@ -9,7 +9,7 @@ description: DEVELOP パスを実行する（商談後・検証ゲートあり�
 1. `prompts/inception_briefing.md` を Read で読み込む（**これが実行手順の正**）
 2. `local_env.json` からパラメータをバインドする
 3. `MODE` = **DEVELOP**
-4. `projects/<PROJECT_SLUG>/` の既存成果物と `review_history.md` をすべて Read で読み込む
+4. `OUTPUT_DIR` 配下の既存成果物と `review_history.md` をすべて Read で読み込む
 
 引数で対象案件や重点を指定された場合は、それに従う。
 

@@ -7,7 +7,7 @@ description: DRAFT パスを実行する（商談中・止まらない・目標8
 ## 1. 準備
 
 1. `prompts/inception_briefing.md` を Read で読み込む（**これが実行手順の正**。以下は起動指示にすぎない）
-2. `local_env.json` から `PROJECT_NAME` / `PROJECT_SLUG` / `PROJECT_SUMMARY` / `FIGJAM_URL` / `RAW_HEARING_MEMO` をバインドする
+2. `local_env.json` から `PROJECT_NAME` / `OUTPUT_DIR` / `PROJECT_SUMMARY` / `FIGJAM_URL` / `RAW_HEARING_MEMO` をバインドする
 3. `MODE` = **DRAFT**
 
 引数が渡されている場合、それを `RAW_HEARING_MEMO` として **`local_env.json` の値より優先**する。

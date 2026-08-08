@@ -32,8 +32,8 @@ description: 離陸前点検 —— MCP接続・設定・エージェント・�
 
 `local_env.json` に以下が揃っているか。**値は伏せ、有無と文字数だけ**報告する。
 
-- `PROJECT_NAME` / `PROJECT_SLUG` / `PROJECT_SUMMARY` / `FIGJAM_URL` / `RAW_HEARING_MEMO`
-- **`PROJECT_SLUG` が無い場合は ❌。** 出力先ディレクトリが決まらず `/draft` が走れません
+- `PROJECT_NAME` / `OUTPUT_DIR` / `PROJECT_SUMMARY` / `FIGJAM_URL` / `RAW_HEARING_MEMO`
+- **`OUTPUT_DIR` が無い場合は ❌。** 出力先が決まらず `/draft` が走れません
 
 ## 3. エージェントと knowledge
 
@@ -43,7 +43,7 @@ description: 離陸前点検 —— MCP接続・設定・エージェント・�
 
 ## 4. 出力先の衝突
 
-- `projects/<PROJECT_SLUG>/` が**既に存在しないか**を確認する
+- `OUTPUT_DIR` が指すディレクトリが**既に存在しないか**を確認する
 - 存在する場合は ⚠️。上書きすると前回の成果物が失われます。
   スラッグを変えるか、既存を退避するかを人間に確認してください
 
@@ -73,7 +73,7 @@ description: 離陸前点検 —— MCP接続・設定・エージェント・�
 
 ```
 1. FigJam MCP 疎通       ✅  要素56件を取得
-2. 設定パラメータ         ❌  PROJECT_SLUG なし
+2. 設定パラメータ         ❌  OUTPUT_DIR なし
 3. エージェント/knowledge  ✅  3体・10ファイル・リンク切れなし
 4. 出力先の衝突           ✅  なし
 5. 権限                  ⚠️  Read/Write/Task が未許可
@@ -87,6 +87,6 @@ description: 離陸前点検 —— MCP接続・設定・エージェント・�
 
 一覧のあとに区切り線を引き、**「本番可否」を1〜2行**で述べてください。
 
-- ❌ が `PROJECT_SLUG` またはエージェント欠落 → **走れません。先に直してください**
+- ❌ が `OUTPUT_DIR` またはエージェント欠落 → **走れません。先に直してください**
 - ❌ が FigJam MCP のみ → **走れます。引数入力に切り替えてください**
 - ⚠️ のみ → **走れますが、途中で止まる可能性があります**
