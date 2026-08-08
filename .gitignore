@@ -1,6 +1,10 @@
-# Local environment variables and secrets (Do NOT push to Git)
+# 環境変数・機密（Do NOT push to Git）
 local_env.json
-.env
+
+# .env の全バリエーション（Next.js 等の .env.local / .env.production も含む）
+# ただし .env.example（ダミー値のひな形）は追跡してよい
+.env*
+!.env.example
 
 # Local development and temporary logs
 *.local.md
