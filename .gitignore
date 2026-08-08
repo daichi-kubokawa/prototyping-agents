@@ -1,0 +1,6 @@
+# Local environment variables and secrets (Do NOT push to Git)
+local_env.json
+.env
+
+# Local development and temporary logs
+*.local.md
