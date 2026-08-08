@@ -1,15 +1,22 @@
 <spec_driven_inception_framework>
 
-# 1. プロジェクト設定パラメータ（手動入力エリア）
+# 1. 実行パラメータ
 
-=========================================
-【MODE】 : {{MODE}}                    ← DRAFT / DEVELOP のいずれか（§2 参照）
-【PROJECT_NAME】 : {{PROJECT_NAME}}
-【PROJECT_SLUG】 : {{PROJECT_SLUG}}    ← 成果物の出力先ディレクトリ名（半角英小文字・ハイフン）
-【PROJECT_SUMMARY】 : {{PROJECT_SUMMARY}}
-【FIGJAM_URL】 : {{FIGJAM_URL}}
-【RAW_HEARING_MEMO】 : {{RAW_HEARING_MEMO}}
-=========================================
+値は `local_env.json`（Git 追跡外）からバインドする。
+**本ファイルに実データを書き込んではならない**（シークレットリーク防止）。
+
+```
+MODE              DRAFT | DEVELOP         実行モード（§2）
+PROJECT_NAME      文字列                   プロダクト名
+PROJECT_SLUG      半角英小文字・ハイフン      出力先 → projects/<slug>/
+PROJECT_SUMMARY   文字列                   一行概要
+FIGJAM_URL        URL                     ヒアリング整理先（Figma MCP 経由で取得）
+RAW_HEARING_MEMO  文字列 or ファイルパス      FigJam が使えないときの入力
+```
+
+- `MODE` はコマンド（`/draft` `/develop`）が設定する。`local_env.json` には不要
+- `RAW_HEARING_MEMO` は `$ARGUMENTS`（コマンドの引数）で上書きされる。**引数が優先**
+- `PROJECT_SLUG` が未設定だと出力先が決まらず実行できない
 
 # 2. 二周構造 ―― DRAFT パスと DEVELOP パス
 
@@ -113,7 +120,7 @@
 
 `projects/{{PROJECT_SLUG}}/` をディレクトリごと新規作成し、`briefing.md` を生成する。
 
-- 入力は Figma MCP 経由の【FIGJAM_URL】。MCP が使えない場合は【RAW_HEARING_MEMO】へ即座にフォールバックする
+- 入力は Figma MCP 経由の `FIGJAM_URL`。MCP が使えない場合は `RAW_HEARING_MEMO` へ即座にフォールバックする
 - **MCP の接続で立ち止まらない。** 2回失敗したらフォールバックへ切り替える
 - 実データは §4 のガードレールに従いマスクする
 

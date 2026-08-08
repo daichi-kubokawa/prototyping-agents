@@ -14,3 +14,4 @@ inputs/
 
 # Scratch area (device_bash では削除できないため手動で削除すること)
 _to_delete/
+_staging/

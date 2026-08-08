@@ -50,8 +50,12 @@ product-agent は、あなたのプロダクトマネージャー兼ビジネス
 1. `/CLAUDE.md` — リポジトリ共通ルール
 2. `.claude/knowledge/shared/guardrails.md` — 共通ガードレール
 3. `.claude/knowledge/product-agent/context-of-use.md` — **利用文脈 C-1〜C-5 の抽出フレーム**
-4. `.claude/knowledge/product-agent/requirements-template.md` — `requirements.md` の構成テンプレート
-5. 先行成果物（`briefing.md`）
+4. `.claude/knowledge/product-agent/hearing-inputs.md` — ヒアリング入力の経路と注意点
+5. `.claude/knowledge/product-agent/requirements-template.md` — `requirements.md` の構成テンプレート
+6. 先行成果物（`briefing.md`）
+
+> `frontend-security.md` は意図的に読み込まない。DOM バインドは設計層の関心事であり、
+> 要件側が触れると層の侵犯を誘発するため。
 
 ## 期待される振る舞い（What to Expect）
 

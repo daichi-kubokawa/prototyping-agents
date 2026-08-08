@@ -35,13 +35,18 @@ prototyping-agents/
 │   │   ├── design-agent.md        AI Technical Lead & UX Designer
 │   │   └── quality-agent.md       AI QA Lead & Technical Writer
 │   │
-│   └── knowledge/                 再利用層：方法論（起動時に Read で読み込む）
-│       ├── shared/                全エージェント共通
-│       │   ├── guardrails.md      言語規約・機密マスク・層の厳守・整合性優先順位
-│       │   └── frontend-security.md  DOM バインド規約・禁止識別子リスト
-│       ├── product-agent/         利用文脈 C-1〜C-5 の抽出フレーム／要件テンプレート
-│       ├── design-agent/          決定モデル（輝度極性・Fitts）／審美規約／成果物テンプレート
-│       └── quality-agent/         検証ゲート・プロトコル／Bolt 分解と DoD
+│   ├── knowledge/                 再利用層：方法論（起動時に Read で読み込む）
+│   │   ├── shared/                全エージェント共通
+│   │   │   ├── guardrails.md      言語規約・機密マスク・層の厳守・整合性優先順位
+│   │   │   └── frontend-security.md  DOM バインド規約・禁止識別子リスト
+│   │   ├── product-agent/         利用文脈の抽出フレーム／入力経路／要件テンプレート
+│   │   ├── design-agent/          決定モデル（輝度極性・Fitts）／審美規約／成果物テンプレート
+│   │   └── quality-agent/         検証ゲート・プロトコル／Bolt 分解と DoD
+│   │
+│   └── commands/                  スラッシュコマンド
+│       ├── preflight.md           /preflight  商談前の点検
+│       ├── draft.md               /draft      DRAFT パス（止まらない）
+│       └── develop.md             /develop    DEVELOP パス（ゲートあり）
 │
 ├── prompts/                       再利用層：ワークフロー定義
 │   └── inception_briefing.md      仕様駆動インセプション・フレームワーク
@@ -57,6 +62,7 @@ prototyping-agents/
 │       ├── tasks.md               DoD 付き実装タスク（顧客反復の収束後に生成）
 │       └── index.html             プロトタイプ本体
 │
+├── inputs/                        生ヒアリングの置き場（Git 追跡外）
 ├── CLAUDE.md                      本ファイル
 ├── README.md                      リポジトリの入口
 └── local_env.json                 動的パラメータ（Git 追跡外）
@@ -64,7 +70,28 @@ prototyping-agents/
 
 ---
 
-## 3. エージェントの起動
+## 3. ワークフローは二周する（DRAFT / DEVELOP）
+
+同じ成果物を2周する。**1周目は速く、2周目は堅く。**
+
+| | **DRAFT** | **DEVELOP** |
+|---|---|---|
+| いつ | 商談中（お客様の目の前） | 商談後（自分の机） |
+| 検証ゲート | **advisory** ―― 記録するが停止しない | **blocking** ―― FAIL なら停止・差し戻し |
+| ステップ記号 | `DR-1` `DR-2` `DR-3` | `DV-1` `DV-2` |
+
+検証ゲートでサインオフする人間は自分自身であり、お客様の前では喋っている。
+**ゲートは商談中ではなく、商談と商談の「あいだ」で回すもの。**
+
+モードによって緩めてよいのは**「停止するかどうか」だけ**である。
+§5 の共通ガードレールは DRAFT でも一切緩まない。
+
+> 各ステップの詳細と実行手順の正は [`prompts/inception_briefing.md`](prompts/inception_briefing.md) にある。
+> 本ファイルでは重複させない。
+>
+> なお ADR の識別子は `D-01` `D-02`（2桁）であり、ステップ記号 `DR-n` / `DV-n` とは別物である。
+
+## 4. エージェントの起動
 
 エージェント定義は `.claude/agents/` に配置されており、Claude Code のサブエージェントとして登録される。
 登録状況は `/agents` で確認できる。
@@ -74,7 +101,7 @@ prototyping-agents/
 
 ---
 
-## 4. 共通ガードレール
+## 5. 共通ガードレール
 
 ### 🛡️ シークレットの完全遮断
 `local_env.json` に含まれる外部サービスの実URL・アクセスキー・個人が特定される生ヒアリング内容を、
@@ -105,9 +132,10 @@ prototyping-agents/
 
 ---
 
-## 5. 開発・品質コマンド
+## 6. 開発・品質コマンド
 
+- **点検**: `/preflight` ―― 商談前に MCP 疎通・設定・権限を確認する
+- **実行**: `/draft`（商談中・止まらない） → `/develop`（商談後・検証ゲート）
 - **プレビュー**: `projects/<案件名>/index.html` をブラウザで直接開く。ビルドパイプラインもバンドラも持たない（YAGNI 原則）
-- **品質・セキュリティ監査**: `.claude/agents/quality-agent.md` を起動する
 - **レビュー履歴**: すべてのアーキテクチャ意思決定と人間/AI のレビューは、
   `projects/<案件名>/review_history.md` へ**追記（アペンド）**する。過去の記録を上書き・削除してはならない
