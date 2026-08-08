@@ -5,6 +5,10 @@ local_env.json
 # Local development and temporary logs
 *.local.md
 
+# 生のヒアリング入力（録音の文字起こし、外部整理ツールの出力）
+# 個人情報を含むため Git に載せない
+inputs/
+
 # macOS
 .DS_Store
 
