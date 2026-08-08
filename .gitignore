@@ -4,3 +4,9 @@ local_env.json
 
 # Local development and temporary logs
 *.local.md
+
+# macOS
+.DS_Store
+
+# Scratch area (device_bash では削除できないため手動で削除すること)
+_to_delete/
