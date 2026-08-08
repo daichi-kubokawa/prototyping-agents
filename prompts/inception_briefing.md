@@ -69,7 +69,8 @@
 │   └── inception_briefing.md          ★本プロンプト（Prompt Ops 資産）
 │
 └── projects/{{PROJECT_SLUG}}/         ── 案件層：本実行の成果物
-    ├── CLAUDE.md                      【手動配備】案件固有ルール・既知の利用文脈
+    │                                     ★ディレクトリごとフェーズ1で新規作成する。
+    │                                       実行前にこの配下へ何かを置いてはならない（後述）
     ├── briefing.md                    【フェーズ1】SSoT — Why & Who
     ├── review_history.md              【全フェーズ】レビュー履歴・サインオフ証跡（追記のみ）
     ├── requirements.md                【フェーズ2】product-agent — 利用文脈 C-1〜C-5、スコープ
@@ -89,7 +90,12 @@
    Git 追跡外の `local_env.json` からプロジェクト設定パラメータを動的にバインドして実行します。本プロンプトに実データを直接上書き保存することは、シークレットリーク防止の観点から厳格に禁止します。
 
 2. **原点の自律生成**（`product-agent`）：
-   バインドされた設定変数をもとに Figma MCP を起動して【FIGJAM_URL】をパースし（MCP が利用できない場合は【RAW_HEARING_MEMO】を入力とする）、すべての設計判断の原点となる `projects/{{PROJECT_SLUG}}/briefing.md` を生成してください。実URL等は §3 のガードレールに従い厳重にマスクすること。
+   バインドされた設定変数をもとに Figma MCP を起動して【FIGJAM_URL】をパースし（MCP が利用できない場合は【RAW_HEARING_MEMO】を入力とする）、すべての設計判断の原点となる `briefing.md` を生成してください。実URL等は §3 のガードレールに従い厳重にマスクすること。
+
+   > ⚠️ **`projects/{{PROJECT_SLUG}}/` は、このステップでディレクトリごと新規作成します。**
+   > 実行前にこの配下へ利用文脈や設計方針を置いておいてはなりません。
+   > 案件についての情報は、すべてヒアリング（FIGJAM_URL / RAW_HEARING_MEMO）から生まれるべきものです。
+   > 先に置かれた記述は、対話から導出されたものではないため SSoT を汚染します。
 
 3. **【検証ゲート1】の実行**（`quality-agent`）：
    `briefing.md` の生成が完了したら、処理を止めずに自律的にレビューを行ってください。

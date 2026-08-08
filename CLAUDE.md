@@ -1,7 +1,8 @@
 # AI Developer Rules（リポジトリ共通）
 
 本リポジトリで作業する AI エージェント（Claude Code 等）が遵守すべき、リポジトリ横断の制約と規約を定義する。
-**案件固有のルールは、各案件ディレクトリ配下の `projects/<案件名>/CLAUDE.md` に置くこと。本ファイルに案件固有の具体値を書いてはならない。**
+**本ファイルに案件固有の具体値（配色・レイアウト・技術構成・特定プロダクトの利用文脈）を書いてはならない。**
+案件固有の情報は、すべて `projects/<案件名>/` 配下の成果物としてワークフローが生成する。
 
 ---
 
@@ -12,11 +13,15 @@
 
 | 層 | 場所 | 性質 |
 |---|---|---|
-| **再利用層** | `.claude/agents/` `prompts/` | プロダクト非依存。具体的な色値・フォント名・レイアウト形状を含んではならない |
+| **再利用層** | `.claude/agents/` `.claude/knowledge/` `prompts/` | プロダクト非依存。具体的な色値・フォント名・レイアウト形状を含んではならない |
 | **案件層** | `projects/<案件名>/` | 案件固有。利用文脈と、そこから導出された具体値が置かれる |
 
 再利用層のエージェントは、案件層の `requirements.md`（利用文脈）を入力変数として、具体値を**導出**する。
 再利用層に具体値をハードコードすることは、本リポジトリにおける最も重大な設計違反とみなす。
+
+**案件層は、ワークフロー実行時にゼロから生成される。** ヒアリング前に `projects/<案件名>/` 配下へ
+利用文脈や設計方針を置いてはならない。案件についての情報は、すべてお客様との対話から生まれるべきものであり、
+先に置かれた記述は対話の産物ではないため SSoT を汚染する。
 
 ---
 
@@ -25,17 +30,24 @@
 ```
 aidlc-learning/
 ├── .claude/
-│   └── agents/                    再利用層：エージェント定義（Claude Code が自動認識）
-│       ├── product-agent.md       AI Product Manager
-│       ├── design-agent.md        AI Technical Lead & UX Designer
-│       └── quality-agent.md       AI QA Lead & Technical Writer
+│   ├── agents/                    再利用層：エージェント定義（役割・担当ステージ・絶対禁止事項）
+│   │   ├── product-agent.md       AI Product Manager
+│   │   ├── design-agent.md        AI Technical Lead & UX Designer
+│   │   └── quality-agent.md       AI QA Lead & Technical Writer
+│   │
+│   └── knowledge/                 再利用層：方法論（起動時に Read で読み込む）
+│       ├── shared/                全エージェント共通
+│       │   ├── guardrails.md      言語規約・機密マスク・層の厳守・整合性優先順位
+│       │   └── frontend-security.md  DOM バインド規約・禁止識別子リスト
+│       ├── product-agent/         利用文脈 C-1〜C-5 の抽出フレーム／要件テンプレート
+│       ├── design-agent/          決定モデル（輝度極性・Fitts）／審美規約／成果物テンプレート
+│       └── quality-agent/         検証ゲート・プロトコル／Bolt 分解と DoD
 │
 ├── prompts/                       再利用層：ワークフロー定義
 │   └── inception_briefing.md      仕様駆動インセプション・フレームワーク
 │
-├── projects/                      案件層
+├── projects/                      案件層（ワークフロー実行時に生成される）
 │   └── <案件名>/
-│       ├── CLAUDE.md              案件固有ルール
 │       ├── briefing.md            SSoT（Why & Who）
 │       ├── requirements.md        要件定義（利用文脈 C-1〜C-5）
 │       ├── design.md              技術設計（ADR: D-01 輝度極性 / D-02 操作アンカー）
