@@ -28,7 +28,7 @@
 ## 2. ディレクトリ構成
 
 ```
-aidlc-learning/
+prototyping-agents/
 ├── .claude/
 │   ├── agents/                    再利用層：エージェント定義（役割・担当ステージ・絶対禁止事項）
 │   │   ├── product-agent.md       AI Product Manager
