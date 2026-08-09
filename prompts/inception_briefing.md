@@ -109,7 +109,8 @@ spec                 実案件（Template から生成した専用リポジト�
     ├── review_history.md              【全工程】レビュー履歴・改修ログ（追記のみ）
     ├── requirements.md                【DR-2】利用文脈 C-1〜C-5、スコープ
     ├── design.md                      【DR-2】D-00 支配的判断／ADR（D-01/D-02 等）
-    ├── screens.md                     【DR-2】画面仕様（D-00 で「要」のときのみ）
+    ├── screens.md                     【DR-2】画面仕様・遷移図（D-00 で「要」のときのみ）
+    ├── content.md                     【DR-2】画面に出る実文言（コンテンツ駆動型のみ）
     ├── Guidelines.md                  【DR-2】デザイントークン、変更要求写像
     ├── figma_make_prompt.md           【DR-2】Figma Make 連携プロンプト
     ├── tasks.md                       【DV-2】DoD 付き実装タスク
@@ -144,7 +145,8 @@ spec                 実案件（Template から生成した専用リポジト�
 |---|---|---|---|---|
 | ① | `requirements.md` | `product-agent` | **利用文脈 C-1〜C-5**、Must Have、Open Questions | Should/Could/Won't、データ構造、非機能要件の詳細 |
 | ② | `design.md` | `design-agent` | **D-00 支配的判断の特定** ＋ 支配的なモデルの ADR（D-01/D-02 等） | D-03 以降、例外制御フロー、状態遷移図、ユニット分解 |
-| ②b | `screens.md` | `design-agent` | **D-00 で「要」と判定した場合のみ**。画面一覧＋各画面の 目的／表示要素／アクション | 網羅的な要素定義、エッジケース画面 |
+| ②b | `screens.md` | `design-agent` | **D-00 で「要」のときのみ**。画面一覧／遷移図（Mermaid）／表示要素／アクション／**空状態と条件分岐** | 網羅的な要素定義、詳細仕様 |
+| ②c | `content.md` | `design-agent` | **コンテンツ駆動型のときのみ**。画面に出る**実際の文言**（仮説として明記） | 全画面ぶんの網羅、妥当性検証後の確定版 |
 | ③ | `Guidelines.md` | `design-agent` | カラートークン、書体、**変更要求→トークン写像表** | 禁則事項の全文、モーション規約、禁止識別子リスト |
 | ④ | `figma_make_prompt.md` | `design-agent` | Task/Context/Elements/Behavior/Constraints 一式 | ― |
 
@@ -152,7 +154,10 @@ spec                 実案件（Template から生成した専用リポジト�
 - **決定モデルを機械的に全部回さない。** D-00 で非支配的と判定したものは、既定値の採用を1〜2行で述べるに留める。
   情報が無いところから1節かけて結論を出すのは、導出ではなく儀式である
 - **画面が2枚以上、または情報設計が支配的なら `screens.md` を作る。**
-  これが無いと `figma_make_prompt.md` の Elements 節が書けない（Elements ＝ 表示要素 × トークン）
+  これが無いと `figma_make_prompt.md` の Elements 節が書けない
+- **コンテンツ駆動型（画面から文字を消すと何も残らない）なら `content.md` を作る。**
+  無いと Figma Make がダミーテキストで埋め、製品として何も伝わらないものになる
+- `figma_make_prompt.md` には **「ダミーテキストでの生成を禁止する」** の一文を必ず含める
 - C-3（装置）／C-4（物理環境）が欠けている場合、**推測で埋めてその場で口頭確認する**（止まらない）
 - 各成果物の詳細規約は、担当エージェントの定義と `.claude/knowledge/` に従う
 
@@ -192,7 +197,11 @@ spec                 実案件（Template から生成した専用リポジト�
    - ゲート2: V-1 矛盾／V-2 トレーサビリティ断絶／V-3 孤児成果物／V-4 用語・値の揺れ
    - 重点: セキュリティ要件の貫通、DOM バインド規約の貫通、**D-01/D-02 が C-1〜C-5 まで遡れるか**
 5. **DR-2 で省いた項目の補完**：上表「DEVELOP で補完すること」を各担当エージェントが埋める
-6. **記録と停止**：結果を `review_history.md` へ追記し、人間のサインオフを待って停止する
+6. **完成度を上げる成果物の追加**（必要に応じて。DRAFT では作らない）
+   - `detailed_spec.md` ―― 画面遷移ロジック、イベント、状態変化、空状態の網羅
+   - `user_story.md` / `acceptance.md` ―― 受入基準の形式化
+   - `content.md` の妥当性検証と確定版への更新（DRAFT 版は仮説である）
+7. **記録と停止**：結果を `review_history.md` へ追記し、人間のサインオフを待って停止する
 
 ### DV-2. 実装計画と実装（`quality-agent` → 実装）
 

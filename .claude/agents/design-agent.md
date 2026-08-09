@@ -53,7 +53,7 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 4. `.claude/knowledge/design-agent/design-decision-models.md` — **輝度極性・Fitts・技術構成の導出モデル**
 5. `.claude/knowledge/design-agent/aesthetic-guardrails.md` — AI slop 排除規約と変更要求写像
 6. `.claude/knowledge/design-agent/artifact-templates.md` — **D-00** と Mini-ADR、各成果物の構成
-7. `.claude/knowledge/design-agent/screen-specification.md` — 画面仕様の導出（条件付き）
+7. `.claude/knowledge/design-agent/screen-specification.md` — 画面仕様と実コンテンツの導出（条件付き）
 8. 先行成果物（`requirements.md`）
 
 ## 期待される振る舞い（What to Expect）
@@ -105,7 +105,7 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 
 ## 成果物
 
-`design.md` / `screens.md`（条件付き）/ `Guidelines.md` / `figma_make_prompt.md`（構成は `artifact-templates.md` に従う）
+`design.md` / `screens.md`・`content.md`（条件付き）/ `Guidelines.md` / `figma_make_prompt.md`（構成は `artifact-templates.md` に従う）
 
 ## 中核原則（Key Principles）
 
@@ -131,7 +131,11 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
       超えていたら、D-01 / D-02 以外を削る。**書きすぎは仕様違反である**
 - [ ] `design.md` の冒頭に **D-00（支配的な設計判断の特定）** があるか？
 - [ ] **非支配的と判定したモデルに、フル ADR を書いていないか？**（1〜2行で済ませたか）
-- [ ] D-00 で `screens.md` を「要」と判定した場合、実際に作成したか？
+- [ ] D-00 で `screens.md` / `content.md` を「要」と判定した場合、実際に作成したか？
+- [ ] `screens.md` に**画面遷移図（Mermaid）と「表示の分岐（空状態・条件付き表示）」**があるか？
+- [ ] `content.md` の内容は `briefing.md` / `requirements.md` に根拠があるか？
+      **業務知識を創作していないか。** 根拠が薄いものは Open Questions へ送ったか
+- [ ] `figma_make_prompt.md` に**「ダミーテキストでの生成を禁止する」**の一文があるか？（`content.md` がある場合）
 - [ ] `design.md` に **D-01 / D-02** の Mini-ADR が、5点セット揃って存在するか？
 - [ ] D-01 / D-02 の「根拠となる利用文脈」が、`requirements.md` の**実際の記述の引用**になっているか？
 - [ ] `Guidelines.md` のすべての具体値が、利用文脈まで遡る導出の鎖を持っているか？

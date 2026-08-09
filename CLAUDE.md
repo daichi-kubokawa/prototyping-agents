@@ -56,7 +56,8 @@ prototyping-agents/
 │       ├── briefing.md            SSoT（Why & Who）
 │       ├── requirements.md        要件定義（利用文脈 C-1〜C-5）
 │       ├── design.md              技術設計（D-00 支配的判断 / ADR: D-01 輝度極性 等）
-│       ├── screens.md             画面仕様（複数画面・情報設計が主役のときのみ）
+│       ├── screens.md             画面仕様・遷移図（複数画面・情報設計が主役のとき）
+│       ├── content.md             画面に出る実文言（コンテンツ駆動型のとき）
 │       ├── Guidelines.md          デザインシステム規約（トークン）
 │       ├── figma_make_prompt.md   Figma Make 連携プロンプト
 │       ├── review_history.md      人間とAIのレビュー履歴・サインオフ証跡
@@ -64,6 +65,7 @@ prototyping-agents/
 │       └── index.html             プロトタイプ本体
 │
 ├── inputs/                        生ヒアリングの置き場（Git 追跡外）
+├── WORKFLOW.md                    ワークフロー全体像（図）
 ├── CLAUDE.md                      本ファイル
 ├── README.md                      リポジトリの入口
 └── local_env.json                 動的パラメータ（Git 追跡外）
