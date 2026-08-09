@@ -1,7 +1,9 @@
 ---
-type: framework-original
-sources: []
-original: "D-00・Mini-ADR・DRAFT 列・figma_make_prompt の二形態は、いずれも本フレームワーク独自"
+type: mixed
+sources:
+  - "Michael Nygard — Documenting Architecture Decisions (2011) | https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions | 適用: Mini-ADR の原型"
+  - "Architectural Decision Records | https://adr.github.io/ | 適用: ADR テンプレートの一般形"
+original: "D-00（支配的判断の特定）、Mini-ADR への「再検討トリガ」の追加、DRAFT 列による分量制限、figma_make_prompt の二形態は本フレームワーク独自"
 retrieved_at: 2026-08-09
 last_reviewed: 2026-08-09
 ---
