@@ -175,6 +175,32 @@ AWS Labs の [AI-DLC Workflows 2.0](https://github.com/awslabs/aidlc-workflows) 
 
 ---
 
+## 検証を主観に任せない
+
+AI が「WCAG を満たしています」と書いても、それは**自己申告**です。
+このリポジトリでは、機械が判定できるものは機械に判定させます。
+
+```
+python3 scripts/check_contrast.py examples/<案件名>/Guidelines.md
+python3 scripts/check_forbidden.py examples/<案件名>/
+```
+
+前者は `Guidelines.md` のカラートークンを読み、**WCAG の相対輝度から比率を再計算**して、
+申告値との一致と要求値（本文 4.5:1 ／ 非テキスト 3.0:1）の充足を判定します。
+後者は `innerHTML` などの禁止識別子とインライン `on*` ハンドラを検出します。
+どちらも終了コードを返すため、目視の余地がありません。
+
+これは実際に必要でした。開発中、境界線のコントラストが **2.52:1**（WCAG 1.4.11 の 3:1 未満）
+だった箇所を手作業で見つけています。手で見つけたということは、**次は見逃す**ということです。
+
+両スクリプトは `.claude/settings.json` の PostToolUse フックからも自動実行されます。
+チェックリストは指示にすぎず、静かに飛ばされます。フックは飛ばされません。
+
+> ただしフックが止めるのは**算術で決着がつくものだけ**です。
+> 「要件と設計が矛盾していないか」のような判断は、人間のサインオフに残しています。
+
+---
+
 ## 設計原則
 
 - **文脈が設計を決める。嗜好ではない** ―― 根拠なき具体値は、それ自体が欠陥
@@ -182,6 +208,7 @@ AWS Labs の [AI-DLC Workflows 2.0](https://github.com/awslabs/aidlc-workflows) 
 - **凡庸さは中立ではなく失敗** ―― 既定の書体・グラデーション・角丸は「選択の放棄」
 - **セキュリティは規約であり努力目標ではない** ―― `innerHTML` は設計段階で経路を断つ
 - **PASS を出さない勇気** ―― 品質ゲートの価値は、通さなかった回数で決まる
+- **検証は自己申告にしない** ―― 機械が判定できるものは、機械に判定させる
 
 ---
 
@@ -213,6 +240,7 @@ AWS Labs の [AI-DLC Workflows 2.0](https://github.com/awslabs/aidlc-workflows) 
 - [`.claude/knowledge/`](.claude/knowledge/) ―― 方法論
 - [`.claude/commands/`](.claude/commands/) ―― スラッシュコマンド
 - [`prompts/inception_briefing.md`](prompts/inception_briefing.md) ―― ワークフロー定義
+- [`scripts/`](scripts/) ―― 決定論的な検査（コントラスト検算・禁止識別子）
 - [`CLAUDE.md`](CLAUDE.md) ―― リポジトリ共通ルール
 
 `inputs/` と `local_env.json` は Git 追跡外です。生のヒアリング内容と接続情報を含むためです。

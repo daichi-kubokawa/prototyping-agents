@@ -59,7 +59,14 @@ $ARGUMENTS
 `quality-agent` へ委譲する。
 
 - `tasks.md` の DoD 各項目に `PASS` / `FAIL` を付す
-- **禁止識別子リストによる静的チェック**（`innerHTML` / `eval(` / `v-html` 等）を実行し、0件を確認する
+- **禁止識別子の静的チェックを実行し、0件を確認する**
+
+  ```
+  python3 scripts/check_forbidden.py examples/<案件名>/
+  python3 scripts/check_contrast.py examples/<案件名>/Guidelines.md
+  ```
+
+  **目視ではなく終了コードで判定する。** 両方 0 でなければ FAIL とする
 - 空状態・エラー状態・条件分岐が `screens.md` の定義どおり動くかを確認する
 
 ### BD-4: ドキュメント化（`README.md`）

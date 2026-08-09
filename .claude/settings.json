@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read(//**)",
+      "Glob(//**)",
+      "Grep(//**)",
+      "Task",
+      "Write(examples/**)",
+      "Edit(examples/**)",
+      "Bash(python3 scripts/*)",
+      "Bash(mkdir -p examples/*)",
+      "Bash(ls *)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)"
+    ],
+    "deny": [
+      "Read(local_env.json)",
+      "Write(.claude/**)",
+      "Write(prompts/**)",
+      "Write(CLAUDE.md)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "python3 scripts/hook_verify.py" }
+        ]
+      }
+    ]
+  }
+}

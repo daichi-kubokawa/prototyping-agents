@@ -429,7 +429,8 @@ flowchart LR
 | **IT-2 ④** | 検証ゲート1・2（V-1 矛盾 / V-2 トレーサビリティ / V-3 孤児 / V-4 揺れ） |
 | **IT-2 ⑤** | DRAFT で省いた項目の補完 |
 | **IT-2 ⑥** | 追加成果物（`detailed_spec.md` / `user_story.md` / `acceptance.md`）※必要に応じて |
-| **IT-2 ⑦** | `review_history.md` へ記録して停止 |
+| **IT-2 ⑦** | **開放的レビュー**（枠のない問いを1回だけ投げる） |
+| **IT-2 ⑧** | `review_history.md` へ記録して停止 |
 
 **止まる条件**
 

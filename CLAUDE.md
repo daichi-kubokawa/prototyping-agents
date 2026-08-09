@@ -31,52 +31,17 @@
 
 ## 2. ディレクトリ構成
 
-```
-prototyping-agents/
-├── .claude/
-│   ├── agents/                    再利用層：エージェント定義（役割・担当ステージ・絶対禁止事項）
-│   │   ├── product-agent.md       AI Product Manager
-│   │   ├── design-agent.md        AI Technical Lead & UX Designer
-│   │   └── quality-agent.md       AI QA Lead & Technical Writer
-│   │
-│   ├── knowledge/                 再利用層：方法論（起動時に Read で読み込む）
-│   │   ├── shared/                全エージェント共通
-│   │   │   ├── guardrails.md      言語規約・機密マスク・層の厳守・整合性優先順位
-│   │   │   └── frontend-security.md  DOM バインド規約・禁止識別子リスト
-│   │   ├── product-agent/         利用文脈の抽出フレーム／入力経路／要件テンプレート
-│   │   ├── design-agent/          決定モデル（輝度極性・Fitts）／画面仕様／審美規約／成果物テンプレート
-│   │   └── quality-agent/         検証ゲート・プロトコル／Bolt 分解と DoD
-│   │
-│   └── commands/                  スラッシュコマンド
-│       ├── preflight.md           /preflight  商談前の点検・前回の未確認事項
-│       ├── draft.md               /draft      DRAFT パス（止まらない）
-│       ├── log.md                 /log        顧客反復ログを1行追記
-│       ├── iterate.md             /iterate    ITERATE パス（検証と補完）
-│       └── build.md               /build      BUILD パス（実装）
-│
-├── prompts/                       再利用層：ワークフロー定義
-│   └── inception_briefing.md      仕様駆動インセプション・フレームワーク
-│
-├── examples/                      案件層＝実演（ワークフロー実行時に生成される）
-│   └── <案件名>/
-│       ├── briefing.md            SSoT（Why & Who）
-│       ├── requirements.md        要件定義（利用文脈 C-1〜C-5）
-│       ├── design.md              技術設計（D-00 支配的判断 / ADR: D-01 輝度極性 等）
-│       ├── screens.md             画面仕様・遷移図（複数画面・情報設計が主役のとき）
-│       ├── content.md             画面に出る実文言（コンテンツ駆動型のとき）
-│       ├── figma_output/          Figma Make の最終出力（回収した実物）
-│       ├── Guidelines.md          デザインシステム規約（トークン）
-│       ├── figma_make_prompt.md   Figma Make 連携プロンプト
-│       ├── review_history.md      人間とAIのレビュー履歴・サインオフ証跡
-│       ├── tasks.md               DoD 付き実装タスク（顧客反復の収束後に生成）
-│       └── index.html             プロトタイプ本体
-│
-├── inputs/                        生ヒアリングの置き場（Git 追跡外）
-├── WORKFLOW.md                    ワークフロー全体像（図）
-├── CLAUDE.md                      本ファイル
-├── README.md                      リポジトリの入口
-└── local_env.json                 動的パラメータ（Git 追跡外）
-```
+| パス | 層 | 中身 |
+|---|---|---|
+| `.claude/agents/` | 再利用層 | エージェント定義3体（product / design / quality） |
+| `.claude/knowledge/` | 再利用層 | 方法論。各エージェントが起動時に Read で読む |
+| `.claude/commands/` | 再利用層 | `/preflight` `/draft` `/log` `/iterate` `/build` |
+| `prompts/` | 再利用層 | ワークフロー定義（実行手順の正） |
+| `scripts/` | 再利用層 | **決定論的な検査**（コントラスト検算・禁止識別子） |
+| `examples/<案件名>/` | 案件層 | 成果物。ワークフロー実行時に生成される |
+| `inputs/` | ― | 生ヒアリングの置き場（Git 追跡外） |
+
+> 各成果物の役割は [`README.md`](README.md) と [`WORKFLOW.md`](WORKFLOW.md) にある。**ここでは重複させない。**
 
 ---
 
@@ -150,6 +115,15 @@ DRAFT と ITERATE は同じ成果物を2周するが、BUILD は**その成果�
 
 - **点検**: `/preflight` ―― 商談前に MCP 疎通・設定・権限を確認する
 - **実行**: `/draft`（商談中・止まらない） → `/iterate`（商談後・検証と補完） → `/build`（実装）
+- **検査**: 主観ではなく終了コードで判定する。**書いたら実行すること**
+
+  ```
+  python3 scripts/check_contrast.py examples/<案件名>/Guidelines.md   # WCAG 比率の検算
+  python3 scripts/check_forbidden.py examples/<案件名>/               # 禁止識別子の検出
+  ```
+
+  この2つは `.claude/settings.json` の PostToolUse フックからも自動実行される。
+  **検査は常に走る。** モードが変えてよいのは停止するかどうかだけである
 - **プレビュー**: `examples/<案件名>/index.html` をブラウザで直接開く。ビルドパイプラインもバンドラも持たない（YAGNI 原則）
 - **レビュー履歴**: すべてのアーキテクチャ意思決定と人間/AI のレビューは、
   `examples/<案件名>/review_history.md` へ**追記（アペンド）**する。過去の記録を上書き・削除してはならない
