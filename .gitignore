@@ -13,6 +13,9 @@ local_env.json
 # 個人情報を含むため Git に載せない
 inputs/
 
+# 上書き前の自動バックアップ（公開しない）
+*.bak-*
+
 # macOS
 .DS_Store
 

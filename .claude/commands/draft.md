@@ -7,16 +7,51 @@ description: DRAFT パスを実行する（商談中・止まらない・目標8
 ## 1. 準備
 
 1. `prompts/inception_briefing.md` を Read で読み込む（**これが実行手順の正**。以下は起動指示にすぎない）
-2. `local_env.json` から `PROJECT_NAME` / `OUTPUT_DIR` / `PROJECT_SUMMARY` / `FIGJAM_URL` / `RAW_HEARING_MEMO` をバインドする
 3. `MODE` = **DRAFT**
+4. 下記の規則でパラメータを解決する
 
-引数が渡されている場合、それを `RAW_HEARING_MEMO` として **`local_env.json` の値より優先**する。
+### 引数の解決（引数は `local_env.json` より優先）
 
-- 引数が**ファイルパス**（`@inputs/xxx.md` 等）なら、その中身を Read して入力とする
-- 引数が**テキスト**ならそのまま入力とする
-- 外部整理ツール（NotebookLM 等）の出力を渡された場合は、
-  `.claude/knowledge/product-agent/hearing-inputs.md` の「取り込み方」に従い、
-  **二次情報である旨を `briefing.md` の Assumptions に明記**する
+引数は最大2つ。**`<案件名> <入力ソース>`** の順に解釈する。
+
+| 引数 | 解釈 |
+|---|---|
+| 第1引数 | **案件名**。ここから `OUTPUT_DIR` を導出する |
+| 第2引数以降 | **入力ソース**（下表で自動判別） |
+
+**`OUTPUT_DIR` の導出**
+
+- 第1引数が半角英小文字・数字・ハイフンのみ → `examples/<第1引数>` をそのまま使う
+- 第1引数が日本語等を含む → **内容から適切な英小文字スラッグを生成**する
+  （例: `設備点検アプリ` → `examples/field-inspection`）
+- **導出したパスは、必ず報告の冒頭で1行明示する**（意図しない場所への書き出しを防ぐため）
+- 第1引数が無い → `local_env.json` の `OUTPUT_DIR` を使う
+
+**入力ソースの自動判別**
+
+| 形 | 解釈 |
+|---|---|
+| `http://` / `https://` で始まる | `FIGJAM_URL` として Figma MCP で取得 |
+| `@` で始まる | ファイルパス。Read して `RAW_HEARING_MEMO` とする |
+| それ以外のテキスト | そのまま `RAW_HEARING_MEMO` とする |
+| 指定なし | `local_env.json` の `FIGJAM_URL` → 失敗時 `RAW_HEARING_MEMO` |
+
+`PROJECT_NAME` / `PROJECT_SUMMARY` は、引数の案件名と入力ソースから補って構わない。
+不足しても実行を止めないこと。
+
+外部整理ツール（NotebookLM 等）の出力を渡された場合は、
+`.claude/knowledge/product-agent/hearing-inputs.md` の「取り込み方」に従い、
+**二次情報である旨を `briefing.md` の Assumptions に明記**する。
+
+### 使用例
+
+```
+/draft                                          local_env.json のみで実行
+/draft field-inspection                         案件名だけ指定
+/draft 設備点検アプリ https://figma.com/board/x  案件名 + FigJam
+/draft 設備点検アプリ @inputs/hearing.md         案件名 + 外部ファイル
+/draft 設備点検アプリ 屋外で手袋をつけた作業員が… 案件名 + 直接メモ
+```
 
 $ARGUMENTS
 
@@ -38,15 +73,39 @@ $ARGUMENTS
 2. `innerHTML` 系の危険なバインドが設計に混入している
 3. 利用文脈 C-3 または C-4 が**完全に**欠落している
 
-## 3. 完了時の出力（重要：簡潔に）
+## 3. DR-2 完了直後の advisory スキャン（委譲せず、自分で実行）
+
+> `quality-agent` へは委譲しない（コールドスタートで1〜2分失うため）。
+> **オーケストレータ自身が、生成物を読んで以下4点だけを走査する。**
+> フル検査（V-1〜V-4）は DEVELOP パスで `quality-agent` が行う。
+
+| # | 検査 | 見るもの |
+|---|---|---|
+| S-1 | **解法の混入** | `briefing.md` / `requirements.md` に、配色・レイアウト・技術構成の**指定**が書かれていないか。書かれていれば上流の層の侵犯であり、D-01/D-02 が「導出」ではなく「追認」になっている疑いがある |
+| S-2 | **機密の平文** | 実URL・アクセスキー・個人が特定される記述が成果物に残っていないか |
+| S-3 | **DOM バインド** | `figma_make_prompt.md` の Constraints に、`innerHTML` 禁止と禁止識別子リストが転記されているか |
+| S-4 | **C-3 / C-4 の欠落** | `requirements.md` の装置・物理環境が空でないか |
+
+検出したものは `review_history.md` の `## 保留指摘（DRAFT）` へ追記する。
+**S-1 と S-2 は、検出したら報告の冒頭に1行で警告する**（進行は止めない）。
+
+> ⚠️ **時間がないことは、検査を省略する理由にならない。**
+> 止めないだけであって、見ないわけではない。
+
+## 4. 完了時の出力（重要：簡潔に）
 
 **長い要約は書かないこと。** 商談中に読む時間はない。以下だけを出力する。
 
-1. ⚠️ 上記3警告があれば1行で
+1. **出力先**: 解決した `OUTPUT_DIR` を1行で明示する
+2. ⚠️ 上記3警告があれば1行で
 2. 生成したファイルのパス一覧
 3. **D-01（輝度極性）**: 決定 ＋ 根拠を1行
-4. **D-02（操作アンカー）**: 決定 ＋ 根拠を1行
-5. 保留指摘の件数（内容は列挙しない）
-6. **`figma_make_prompt.md` の全文を、そのままコピーできる形でコードブロックに出力**
+5. **D-02（操作アンカー）**: 決定 ＋ 根拠を1行
+6. 保留指摘の件数（内容は列挙しない）
+7. **`figma_make_prompt.md` の全文を、そのままコピーできる形でコードブロックに出力**
 
-6が最優先です。これを Figma Make に貼るところまでが DRAFT パスの目的です。
+**DRAFT の分量規律**: 各エージェントへの委譲時に、`artifact-templates.md` /
+`requirements-template.md` の **DRAFT 列と分量目安を必ず伝えること**。
+伝えないと、エージェントは完全版の構成に従って書きすぎる。
+
+7が最優先です。これを Figma Make に貼るところまでが DRAFT パスの目的です。
