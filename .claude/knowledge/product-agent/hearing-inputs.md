@@ -1,3 +1,10 @@
+---
+type: framework-original
+sources: []
+original: "全体が本フレームワーク独自。入力経路の設計と要約ツールの欠落パターンは実務観察に基づく"
+retrieved_at: 2026-08-09
+last_reviewed: 2026-08-09
+---
 # ヒアリング入力の経路と注意点
 
 `briefing.md` の入力には3経路ある。**どれを使っても `briefing.md` が SSoT であることは変わらない。**

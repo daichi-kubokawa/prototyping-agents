@@ -1,3 +1,11 @@
+---
+type: mixed
+sources:
+  - "AWS Labs — AI-DLC Workflows | https://github.com/awslabs/aidlc-workflows | 適用: Bolt（Construction の実行単位）"
+original: "Bolt 分解5原則と DoD 4観点は本フレームワーク独自"
+retrieved_at: 2026-08-09
+last_reviewed: 2026-08-09
+---
 # 実装計画（`tasks.md`）と DoD
 
 > ⚠️ **`tasks.md` は BD-1（顧客反復の収束後）で生成する。**

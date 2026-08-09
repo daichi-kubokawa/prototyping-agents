@@ -1,3 +1,11 @@
+---
+type: mixed
+sources:
+  - "AWS Labs — AI-DLC Workflows | https://github.com/awslabs/aidlc-workflows | 適用: 検証ゲートとサインオフの考え方"
+original: "V-1〜V-4、S-1〜S-4、advisory / blocking の二値、顧客反復ログは本フレームワーク独自"
+retrieved_at: 2026-08-09
+last_reviewed: 2026-08-09
+---
 # 検証ゲート・プロトコル
 
 検査は意見の表明ではなく、**機械的な照合作業**である。

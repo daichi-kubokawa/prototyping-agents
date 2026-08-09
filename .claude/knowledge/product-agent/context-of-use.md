@@ -1,3 +1,11 @@
+---
+type: external-standard
+sources:
+  - "ISO 9241-11:2018 — Usability: Definitions and concepts | https://www.iso.org/standard/63500.html | 適用: 利用文脈 C-1〜C-5 の枠組み"
+original: "ヒアリング質問例と C-3/C-4 の抽出手順は本フレームワーク独自"
+retrieved_at: 2026-08-09
+last_reviewed: 2026-08-09
+---
 # 利用文脈の抽出フレーム（Context of Use / ISO 9241-11 準拠）
 
 本エージェントの最も重要な出力は、機能一覧ではなく**利用文脈**である。

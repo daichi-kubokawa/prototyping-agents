@@ -1,3 +1,11 @@
+---
+type: mixed
+sources:
+  - "AWS Labs — AI-DLC Workflows | https://github.com/awslabs/aidlc-workflows | 適用: Inception フェーズの成果物構成"
+original: "DRAFT 列による分量制限と行数予算は本フレームワーク独自"
+retrieved_at: 2026-08-09
+last_reviewed: 2026-08-09
+---
 # `requirements.md` 構成テンプレート
 
 > ⚠️ **DRAFT パスでは以下の3つだけを書く。他の節は見出しのみ置いて「ITERATE パスで記述」と一行。**

@@ -1,3 +1,11 @@
+---
+type: mixed
+sources:
+  - "Fitts, P. M. (1954) Journal of Experimental Psychology 47(6) | URL なし（学術文献） | 適用: モデル② 操作アンカーの MT = a + b·log2(2D/W)"
+original: "モデル①（輝度極性）とモデル③（技術構成）は、網膜順応と YAGNI から本フレームワークが構成した独自モデル"
+retrieved_at: 2026-08-09
+last_reviewed: 2026-08-09
+---
 # 設計決定モデル（利用文脈 → 具体値の導出）
 
 配色もレイアウトも、嗜好ではなく**利用文脈から逆算される関数**である。

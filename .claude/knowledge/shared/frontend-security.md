@@ -1,3 +1,11 @@
+---
+type: external-standard
+sources:
+  - "OWASP — DOM based XSS Prevention Cheat Sheet | https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html | 適用: DOM バインド規約の全体"
+original: "禁止識別子リストの grep 可能な形式化は本フレームワーク独自"
+retrieved_at: 2026-08-09
+last_reviewed: 2026-08-09
+---
 # フロントエンド防衛規約（OWASP XSS の構造的排除）
 
 `design.md` の「セキュリティ設計」節に、**実装者がそのまま従える規約（MUST）**として転記すること。
