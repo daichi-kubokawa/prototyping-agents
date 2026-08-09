@@ -29,10 +29,10 @@ flowchart TD
 
     subgraph M["商談当日 ―― 止まらない"]
         direction TB
-        A["<b>①</b> 開始前<br/>/preflight<br/><i>約1分</i>"]
-        B["<b>②</b> ヒアリング<br/>FigJam に整理<br/><i>15分・AI は走らせない</i>"]
-        C["<b>③</b> 仕様の自動展開<br/>/draft<br/><i>11〜15分</i>"]
-        D["<b>④</b> 顧客反復<br/>Figma Make ⇄ /log<br/><i>25分</i>"]
+        A["<b>①</b> 開始前<br/>/preflight<br/>約1分"]
+        B["<b>②</b> ヒアリング<br/>FigJam に整理<br/>15分・AI は走らせない"]
+        C["<b>③</b> 仕様の自動展開<br/>/draft<br/>11〜15分"]
+        D["<b>④</b> 顧客反復<br/>Figma Make ⇄ /log<br/>25分"]
     end
 
     subgraph AF["商談後 ―― 止まる"]
@@ -44,13 +44,17 @@ flowchart TD
     P --> A --> B --> C --> D --> E --> F
     D -. 次回はここから .-> B
 
-    classDef prep fill:#F5F5F4,stroke:#A8A29E,stroke-width:1px,color:#292524
-    classDef live fill:#FFF7ED,stroke:#EA580C,stroke-width:1px,color:#7C2D12
-    classDef desk fill:#EFF6FF,stroke:#2563EB,stroke-width:1px,color:#1E3A8A
+    classDef prep fill:#E7E5E4,stroke:#78716C,stroke-width:2px,color:#1C1917
+    classDef live fill:#FED7AA,stroke:#C2410C,stroke-width:2px,color:#7C2D12
+    classDef desk fill:#BFDBFE,stroke:#1D4ED8,stroke-width:2px,color:#1E3A8A
     class P prep
     class A,B,C,D live
     class E,F desk
+    linkStyle default stroke-width:2.5px
 ```
+
+> 図中の配色は、文字と背景で 6.9:1 以上、境界と背景で 3.8:1 以上を実測して選定している
+> （WCAG の基準はテキスト 4.5:1、非テキスト 3:1）。ダークモードでも同じ見え方になる。
 
 ---
 
@@ -120,6 +124,8 @@ gantt
 
 3体は決まった記号で受け渡しをする。**この鎖が切れると設計が導出できない。**
 
+**DRAFT ―― 商談中。止まらない**
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -127,32 +133,35 @@ sequenceDiagram
     participant O as オーケストレータ
     participant P as product-agent
     participant D as design-agent
-    participant Q as quality-agent
 
-    rect rgb(255, 247, 237)
-    Note over U,Q: DRAFT ―― 商談中。止まらない
     U->>O: /draft 案件名 入力ソース
     O->>P: 委譲：利用文脈の抽出
-    Note over P: briefing.md<br/>requirements.md（C-1〜C-5）
+    Note right of P: briefing.md<br/>requirements.md（C-1〜C-5）
     P-->>O: 完了
     O->>D: 委譲：設計判断と成果物
-    Note over D: design.md（D-00 → D-01/D-02）<br/>screens.md・content.md<br/>Guidelines.md<br/>figma_make_prompt.md
+    Note right of D: design.md（D-00 → D-01/D-02）<br/>screens.md・content.md<br/>Guidelines.md<br/>figma_make_prompt.md
     D-->>O: 完了
     O->>O: advisory スキャン（S-1〜S-4）
-    Note over O: quality-agent へは委譲しない<br/>コールドスタートで1〜2分失うため
     O-->>U: figma_make_prompt.md
-    end
+```
 
-    rect rgb(239, 246, 255)
-    Note over U,Q: DEVELOP ―― 商談後。止まる
+**DEVELOP ―― 商談後。止まる**
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 人間
+    participant O as オーケストレータ
+    participant Q as quality-agent
+    participant D as design-agent
+
     U->>O: /develop
     O->>Q: 委譲：検証ゲート1・2
-    Note over Q: V-1 矛盾 / V-2 トレーサビリティ<br/>V-3 孤児 / V-4 揺れ<br/>保留指摘の消化
+    Note right of Q: V-1 矛盾／V-2 トレーサビリティ<br/>V-3 孤児／V-4 用語の揺れ<br/>保留指摘の消化
     Q-->>O: PASS / FAIL
     O->>D: FAIL があれば差し戻し
     D-->>O: 再設計
     O-->>U: 停止・サインオフ待ち
-    end
 ```
 
 ```
