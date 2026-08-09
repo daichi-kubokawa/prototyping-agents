@@ -108,7 +108,8 @@ spec                 実案件（Template から生成した専用リポジト�
     ├── briefing.md                    【DR-1】SSoT — Why & Who
     ├── review_history.md              【全工程】レビュー履歴・改修ログ（追記のみ）
     ├── requirements.md                【DR-2】利用文脈 C-1〜C-5、スコープ
-    ├── design.md                      【DR-2】ADR（D-01/D-02）、状態遷移図（DEVELOP で補完）
+    ├── design.md                      【DR-2】D-00 支配的判断／ADR（D-01/D-02 等）
+    ├── screens.md                     【DR-2】画面仕様（D-00 で「要」のときのみ）
     ├── Guidelines.md                  【DR-2】デザイントークン、変更要求写像
     ├── figma_make_prompt.md           【DR-2】Figma Make 連携プロンプト
     ├── tasks.md                       【DV-2】DoD 付き実装タスク
@@ -142,11 +143,16 @@ spec                 実案件（Template から生成した専用リポジト�
 | 順 | 成果物 | 担当 | DRAFT で書くこと | DEVELOP で補完すること |
 |---|---|---|---|---|
 | ① | `requirements.md` | `product-agent` | **利用文脈 C-1〜C-5**、Must Have、Open Questions | Should/Could/Won't、データ構造、非機能要件の詳細 |
-| ② | `design.md` | `design-agent` | **ADR D-01（輝度極性）／D-02（操作アンカー）のみ** | D-03 以降、例外制御フロー、状態遷移図、ユニット分解 |
+| ② | `design.md` | `design-agent` | **D-00 支配的判断の特定** ＋ 支配的なモデルの ADR（D-01/D-02 等） | D-03 以降、例外制御フロー、状態遷移図、ユニット分解 |
+| ②b | `screens.md` | `design-agent` | **D-00 で「要」と判定した場合のみ**。画面一覧＋各画面の 目的／表示要素／アクション | 網羅的な要素定義、エッジケース画面 |
 | ③ | `Guidelines.md` | `design-agent` | カラートークン、書体、**変更要求→トークン写像表** | 禁則事項の全文、モーション規約、禁止識別子リスト |
 | ④ | `figma_make_prompt.md` | `design-agent` | Task/Context/Elements/Behavior/Constraints 一式 | ― |
 
-- **C-1〜C-5、D-01、D-02、写像表の4つは DRAFT でも省略不可。** これらが後続の反復速度を決めるため
+- **C-1〜C-5、D-00、写像表の3つは DRAFT でも省略不可。** これらが後続の反復速度を決めるため
+- **決定モデルを機械的に全部回さない。** D-00 で非支配的と判定したものは、既定値の採用を1〜2行で述べるに留める。
+  情報が無いところから1節かけて結論を出すのは、導出ではなく儀式である
+- **画面が2枚以上、または情報設計が支配的なら `screens.md` を作る。**
+  これが無いと `figma_make_prompt.md` の Elements 節が書けない（Elements ＝ 表示要素 × トークン）
 - C-3（装置）／C-4（物理環境）が欠けている場合、**推測で埋めてその場で口頭確認する**（止まらない）
 - 各成果物の詳細規約は、担当エージェントの定義と `.claude/knowledge/` に従う
 

@@ -52,8 +52,9 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 3. `.claude/knowledge/shared/frontend-security.md` — DOM バインド規約と禁止識別子リスト
 4. `.claude/knowledge/design-agent/design-decision-models.md` — **輝度極性・Fitts・技術構成の導出モデル**
 5. `.claude/knowledge/design-agent/aesthetic-guardrails.md` — AI slop 排除規約と変更要求写像
-6. `.claude/knowledge/design-agent/artifact-templates.md` — Mini-ADR と各成果物の構成
-7. 先行成果物（`requirements.md`）
+6. `.claude/knowledge/design-agent/artifact-templates.md` — **D-00** と Mini-ADR、各成果物の構成
+7. `.claude/knowledge/design-agent/screen-specification.md` — 画面仕様の導出（条件付き）
+8. 先行成果物（`requirements.md`）
 
 ## 期待される振る舞い（What to Expect）
 
@@ -72,7 +73,13 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 
 **C-3（装置）または C-4（物理環境）が欠落している場合、決定モデルは機能しません。** 捏造して埋めず、`design.md` の「未確定の前提」に暫定値・根拠・要確認事項を明記し、product-agent への差し戻しを促してください。
 
-### 2. 決定モデルの適用と ADR の記録
+### 2. 支配的な判断の特定（D-00）― 決定モデルを回す前に
+
+**用意されたモデルを機械的に全部適用してはなりません。** まず「この案件で勝負を決める判断は何か」を D-00 として宣言します。
+
+身体的制約（照度・把持姿勢・手袋・移動）が支配的なら D-01 / D-02 を深掘りし、情報設計・認知負荷が支配的なら `screens.md` を作って情報構造から設計します。**非支配的と判定したモデルは、既定値の採用を1〜2行で述べるに留めます。** 情報が無いところから1節かけて結論を出すのは導出ではなく儀式です。
+
+### 3. 決定モデルの適用と ADR の記録
 
 `design-decision-models.md` に C-1〜C-5 を代入し、結果を Mini-ADR として記録します。
 
@@ -80,11 +87,11 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 
 これらが欠落した成果物は、quality-agent の検証ゲート2で差し戻されます。
 
-### 3. 審美性の強制
+### 4. 審美性の強制
 
 `aesthetic-guardrails.md` の禁則事項 P-1〜P-6 を `Guidelines.md` 冒頭に転記し、自らも遵守します。書体・配色・余白のすべてに選定理由を伴わせてください。**論証できない書体は採用してはなりません。**
 
-### 4. フロントエンド防衛（例外なき禁止）
+### 5. フロントエンド防衛（例外なき禁止）
 
 `innerHTML` 系による動的テキストの展開を**全面禁止**します。要素は `document.createElement()` で生成し、テキストは `.textContent` 経由でのみバインドします。詳細規約と grep 可能な禁止識別子リストは `frontend-security.md` に従い、`design.md` と `Guidelines.md` へ転記してください。
 
@@ -98,7 +105,7 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 
 ## 成果物
 
-`design.md` / `Guidelines.md` / `figma_make_prompt.md`（構成は `artifact-templates.md` に従う）
+`design.md` / `screens.md`（条件付き）/ `Guidelines.md` / `figma_make_prompt.md`（構成は `artifact-templates.md` に従う）
 
 ## 中核原則（Key Principles）
 
@@ -117,11 +124,14 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 
 **1つでも「いいえ」があれば提出してはなりません。**
 
-- [ ] Knowledge Loading の1〜7を、実際に Read で読み込んだか？
+- [ ] Knowledge Loading の1〜8を、実際に Read で読み込んだか？
 - [ ] **DRAFT パスの場合、`artifact-templates.md` の「DRAFT」列が — の節を書いていないか？**
       （見出しと「DEVELOP パスで記述」の一行だけになっているか）
 - [ ] **DRAFT パスの場合、分量目安（design.md 60行 / Guidelines.md 80行）を超えていないか？**
       超えていたら、D-01 / D-02 以外を削る。**書きすぎは仕様違反である**
+- [ ] `design.md` の冒頭に **D-00（支配的な設計判断の特定）** があるか？
+- [ ] **非支配的と判定したモデルに、フル ADR を書いていないか？**（1〜2行で済ませたか）
+- [ ] D-00 で `screens.md` を「要」と判定した場合、実際に作成したか？
 - [ ] `design.md` に **D-01 / D-02** の Mini-ADR が、5点セット揃って存在するか？
 - [ ] D-01 / D-02 の「根拠となる利用文脈」が、`requirements.md` の**実際の記述の引用**になっているか？
 - [ ] `Guidelines.md` のすべての具体値が、利用文脈まで遡る導出の鎖を持っているか？

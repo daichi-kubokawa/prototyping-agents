@@ -107,7 +107,7 @@
 | エージェント | 役割 | 成果物 |
 |---|---|---|
 | `product-agent` | プロダクトマネージャー | `requirements.md`（利用文脈 C-1〜C-5、スコープ） |
-| `design-agent` | テクニカルリード兼 UX デザイナー | `design.md`（ADR）/ `Guidelines.md` / `figma_make_prompt.md` |
+| `design-agent` | テクニカルリード兼 UX デザイナー | `design.md`（ADR）/ `screens.md` / `Guidelines.md` / `figma_make_prompt.md` |
 | `quality-agent` | QA リード兼テクニカルライター | `review_history.md` / `tasks.md` / `README.md` |
 
 3体は決まった記号で受け渡しをします。**この鎖が切れると設計が導出できません。**
@@ -121,6 +121,10 @@ C-1〜C-5        →    D-01 輝度極性     →    トレーサビリティ検
 
 たとえば「夜は電気をつけられない」という一言（C-4）から、
 ダークテーマの採用（D-01）が**根拠つきで導出**されます。好みで選んではいません。
+
+ただし、決定モデルを機械的に全部回すことはしません。まず **D-00「この案件で勝負を決める判断は何か」**
+を特定し、支配的なものにだけ深く踏み込みます。身体的制約が薄いプロダクトでは配色や配置は些末な判断であり、
+そこでは**画面に何を乗せるか（`screens.md`）**の方が製品の中身になります。
 
 AWS Labs の [AI-DLC Workflows 2.0](https://github.com/awslabs/aidlc-workflows) のステージ体系とメタデータ仕様に準拠しつつ、
 11体構成を3体へ集約しています。どの責務をどこへ吸収したかは、各エージェント定義の冒頭に明記しています。

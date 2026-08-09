@@ -40,7 +40,7 @@ prototyping-agents/
 │   │   │   ├── guardrails.md      言語規約・機密マスク・層の厳守・整合性優先順位
 │   │   │   └── frontend-security.md  DOM バインド規約・禁止識別子リスト
 │   │   ├── product-agent/         利用文脈の抽出フレーム／入力経路／要件テンプレート
-│   │   ├── design-agent/          決定モデル（輝度極性・Fitts）／審美規約／成果物テンプレート
+│   │   ├── design-agent/          決定モデル（輝度極性・Fitts）／画面仕様／審美規約／成果物テンプレート
 │   │   └── quality-agent/         検証ゲート・プロトコル／Bolt 分解と DoD
 │   │
 │   └── commands/                  スラッシュコマンド
@@ -55,7 +55,8 @@ prototyping-agents/
 │   └── <案件名>/
 │       ├── briefing.md            SSoT（Why & Who）
 │       ├── requirements.md        要件定義（利用文脈 C-1〜C-5）
-│       ├── design.md              技術設計（ADR: D-01 輝度極性 / D-02 操作アンカー）
+│       ├── design.md              技術設計（D-00 支配的判断 / ADR: D-01 輝度極性 等）
+│       ├── screens.md             画面仕様（複数画面・情報設計が主役のときのみ）
 │       ├── Guidelines.md          デザインシステム規約（トークン）
 │       ├── figma_make_prompt.md   Figma Make 連携プロンプト
 │       ├── review_history.md      人間とAIのレビュー履歴・サインオフ証跡
