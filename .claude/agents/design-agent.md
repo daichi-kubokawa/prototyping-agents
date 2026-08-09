@@ -135,6 +135,9 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 - [ ] **非支配的と判定したモデルに、フル ADR を書いていないか？**（1〜2行で済ませたか）
 - [ ] D-00 で `screens.md` / `content.md` を「要」と判定した場合、実際に作成したか？
 - [ ] `screens.md` に**画面遷移図（Mermaid）と「表示の分岐（空状態・条件付き表示）」**があるか？
+- [ ] **`scripts/check_upload_safety.py` を実行し、終了コード 0 を確認したか？**
+      生の発言引用・`briefing.md` 参照が下流に残っていないか。**遮断はファイル単位では成立しない**
+- [ ] **`content.md` は「表示文字列」だけの表になっているか？** 根拠・注記・引用を混ぜていないか
 - [ ] `content.md` の内容は `briefing.md` / `requirements.md` に根拠があるか？
       **業務知識を創作していないか。** 根拠が薄いものは Open Questions へ送ったか
 - [ ] `figma_make_prompt.md` に**「ダミーテキストでの生成を禁止する」**の一文があるか？（`content.md` がある場合）

@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=BIZ+UDPGothic:wght@400;700&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --color-bg: #F6F7F9;
+  --color-fg-primary: #1B1F24;
+  --color-fg-secondary: #5B6472;
+  --color-border: #7C8592;
+  --color-border-soft: rgba(124, 133, 146, 0.22);
+  --color-accent: #2C5AA0;
+  --color-accent-light: #E8EEF7;
+  --color-surface: #FFFFFF;
+  --font-heading: "Zen Kaku Gothic New", sans-serif;
+  --font-body: "BIZ UDPGothic", sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 133, 146, 0.35);
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}

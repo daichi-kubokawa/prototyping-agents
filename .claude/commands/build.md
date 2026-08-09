@@ -64,9 +64,10 @@ $ARGUMENTS
   ```
   python3 scripts/check_forbidden.py examples/<案件名>/
   python3 scripts/check_contrast.py examples/<案件名>/Guidelines.md
+  python3 scripts/check_upload_safety.py examples/<案件名>/
   ```
 
-  **目視ではなく終了コードで判定する。** 両方 0 でなければ FAIL とする
+  **目視ではなく終了コードで判定する。** 3つとも 0 でなければ FAIL とする
 - 空状態・エラー状態・条件分岐が `screens.md` の定義どおり動くかを確認する
 
 ### BD-4: ドキュメント化（`README.md`）

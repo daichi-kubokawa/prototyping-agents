@@ -1,0 +1,10 @@
+{
+  "description": "Enables graphic designers transitioning to AD roles to track project criteria, confirm milestones, and receive post-project feedback efficiently on desktop.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
