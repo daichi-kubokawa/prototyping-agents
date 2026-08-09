@@ -1,13 +1,13 @@
 # `requirements.md` 構成テンプレート
 
-> ⚠️ **DRAFT パスでは以下の3つだけを書く。他の節は見出しのみ置いて「DEVELOP パスで記述」と一行。**
+> ⚠️ **DRAFT パスでは以下の3つだけを書く。他の節は見出しのみ置いて「ITERATE パスで記述」と一行。**
 > **DRAFT 時の分量目安: 全体で 50行以内。**
 >
 > | § | 節 | DRAFT |
 > |---|---|---|
 > | 1 | **ペルソナと利用文脈 C-1〜C-5** | ✅ **必須** |
 > | 2 | 認知的・身体的ペイン | ✅ 箇条書き3点以内 |
-> | 3 | MoSCoW | ✅ **Must Have のみ**（Should/Could/Won't は DEVELOP） |
+> | 3 | MoSCoW | ✅ **Must Have のみ**（Should/Could/Won't は ITERATE） |
 > | 4 | 中核データ構造 | — |
 > | 5 | 非機能要件 | — |
 > | 6 | **Assumptions / Open Questions** | ✅ **必須** |

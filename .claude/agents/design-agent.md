@@ -126,7 +126,7 @@ design-agent は、あなたのソリューションアーキテクト兼 UX デ
 
 - [ ] Knowledge Loading の1〜8を、実際に Read で読み込んだか？
 - [ ] **DRAFT パスの場合、`artifact-templates.md` の「DRAFT」列が — の節を書いていないか？**
-      （見出しと「DEVELOP パスで記述」の一行だけになっているか）
+      （見出しと「ITERATE パスで記述」の一行だけになっているか）
 - [ ] **DRAFT パスの場合、分量目安（design.md 60行 / Guidelines.md 80行）を超えていないか？**
       超えていたら、D-01 / D-02 以外を削る。**書きすぎは仕様違反である**
 - [ ] `design.md` の冒頭に **D-00（支配的な設計判断の特定）** があるか？

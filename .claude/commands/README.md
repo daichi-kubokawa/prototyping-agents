@@ -6,7 +6,8 @@ Claude Code が起動時に走査し、**ファイル名をそのままコマン
 preflight.md  →  /preflight
 draft.md      →  /draft
 log.md        →  /log
-develop.md    →  /develop
+iterate.md    →  /iterate
+build.md      →  /build
 ```
 
 ## 使い分け
@@ -16,7 +17,16 @@ develop.md    →  /develop
 | `/preflight` | 商談・デモの**直前**（Meet 開始前に済ませる） | ―（点検のみ） |
 | `/draft` | **商談中**。ヒアリング直後 | **止まらない** |
 | `/log` | **商談中**。反復のたび | ―（1行追記のみ・数秒） |
-| `/develop` | **商談後**。自分の机で | **止まる**（各ゲートでサインオフ待ち） |
+| `/iterate` | **商談後**。検証と補完 | **止まる**（各ゲートでサインオフ待ち） |
+| `/build` | 仕様が固まってから。実装 | **止まる**（検証ゲート3で判定） |
+
+`/iterate` と `/build` は、引数が無ければ `examples/` を一覧表示して選ばせる。
+**案件を切り替えるために `local_env.json` を開く必要はない。**
+
+```
+/iterate                    一覧から選択
+/iterate field-inspection   直接指定
+```
 
 ### `/draft` ―― 引数で完結する
 

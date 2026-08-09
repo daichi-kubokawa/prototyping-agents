@@ -46,7 +46,7 @@ prototyping-agents/
 │   └── commands/                  スラッシュコマンド
 │       ├── preflight.md           /preflight  商談前の点検
 │       ├── draft.md               /draft      DRAFT パス（止まらない）
-│       └── develop.md             /develop    DEVELOP パス（ゲートあり）
+│       └── develop.md             /iterate    ITERATE パス（ゲートあり）
 │
 ├── prompts/                       再利用層：ワークフロー定義
 │   └── inception_briefing.md      仕様駆動インセプション・フレームワーク
@@ -73,15 +73,15 @@ prototyping-agents/
 
 ---
 
-## 3. ワークフローは二周する（DRAFT / DEVELOP）
+## 3. ワークフローは二周する（DRAFT / ITERATE）
 
 同じ成果物を2周する。**1周目は速く、2周目は堅く。**
 
-| | **DRAFT** | **DEVELOP** |
+| | **DRAFT** | **ITERATE** |
 |---|---|---|
 | いつ | 商談中（お客様の目の前） | 商談後（自分の机） |
 | 検証ゲート | **advisory** ―― 記録するが停止しない | **blocking** ―― FAIL なら停止・差し戻し |
-| ステップ記号 | `DR-1` `DR-2` `DR-3` | `DV-1` `DV-2` |
+| ステップ記号 | `DR-1` `DR-2` `DR-3` | `IT-1` `BD-1` |
 
 検証ゲートでサインオフする人間は自分自身であり、お客様の前では喋っている。
 **ゲートは商談中ではなく、商談と商談の「あいだ」で回すもの。**
@@ -138,7 +138,7 @@ prototyping-agents/
 ## 6. 開発・品質コマンド
 
 - **点検**: `/preflight` ―― 商談前に MCP 疎通・設定・権限を確認する
-- **実行**: `/draft`（商談中・止まらない） → `/develop`（商談後・検証ゲート）
+- **実行**: `/draft`（商談中・止まらない） → `/iterate`（商談後・検証と補完） → `/build`（実装）
 - **プレビュー**: `examples/<案件名>/index.html` をブラウザで直接開く。ビルドパイプラインもバンドラも持たない（YAGNI 原則）
 - **レビュー履歴**: すべてのアーキテクチャ意思決定と人間/AI のレビューは、
   `examples/<案件名>/review_history.md` へ**追記（アペンド）**する。過去の記録を上書き・削除してはならない

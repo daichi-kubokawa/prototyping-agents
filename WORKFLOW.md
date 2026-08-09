@@ -37,8 +37,8 @@ flowchart TD
 
     subgraph AF["商談後 ―― 止まる"]
         direction TB
-        E["<b>⑤</b> 検証ゲート<br/>/develop DV-1"]
-        F["<b>⑥</b> 実装<br/>/develop DV-2"]
+        E["<b>⑤</b> 検証と補完<br/>/iterate"]
+        F["<b>⑥</b> 実装<br/>/build"]
     end
 
     P --> A --> B --> C --> D --> E --> F
@@ -67,7 +67,7 @@ flowchart TD
 
 そこで同じ成果物を**2周**する。
 
-| | **DRAFT**（商談中） | **DEVELOP**（商談後） |
+| | **DRAFT**（商談中） | **ITERATE**（商談後） |
 |---|---|---|
 | 最適化する対象 | 画面に到達するまでの時間 | 論理的無矛盾とトレーサビリティ |
 | 検証ゲート | **advisory** ―― 記録するが止まらない | **blocking** ―― FAIL なら差し戻し |
@@ -145,7 +145,7 @@ sequenceDiagram
     O-->>U: figma_make_prompt.md
 ```
 
-**DEVELOP ―― 商談後。止まる**
+**ITERATE ―― 商談後。止まる**
 
 ```mermaid
 sequenceDiagram
@@ -155,7 +155,7 @@ sequenceDiagram
     participant Q as quality-agent
     participant D as design-agent
 
-    U->>O: /develop
+    U->>O: /iterate
     O->>Q: 委譲：検証ゲート1・2
     Note right of Q: V-1 矛盾／V-2 トレーサビリティ<br/>V-3 孤児／V-4 用語の揺れ<br/>保留指摘の消化
     Q-->>O: PASS / FAIL
@@ -174,7 +174,7 @@ C-1〜C-5        →    D-01 輝度極性      →    「D-01 は C のどれに
 **`quality-agent` が DRAFT に登場しないのは、意図した設計である。**
 商談中に委譲すると、コールドスタートで1〜2分を失う。
 そこで DRAFT では**オーケストレータ自身が4点だけを高速スキャン**し（解法の混入・機密の平文・
-DOM バインド規約・C-3/C-4 の欠落）、フル検査は DEVELOP で `quality-agent` が行う。
+DOM バインド規約・C-3/C-4 の欠落）、フル検査は ITERATE で `quality-agent` が行う。
 
 緩めているのは**検査の実行タイミングであって、検査そのものではない。**
 
@@ -278,9 +278,13 @@ FigJam に整理しながら聴く。**ここは人間の仕事**である。
 所要時間は前の記録との差から自動算出される。
 **この反復ログが「速さ」を裏づける唯一の証跡**であり、仕様書に速度は残らない。
 
-### ⑤ 検証ゲート ―― `/develop`（DV-1）
+### ⑤ 検証と補完 ―― `/iterate`
 
 ここで初めて **`quality-agent`** が起動する。**blocking** であり、`FAIL` があれば停止して差し戻す。
+
+> **ITERATE から先に実行することはできない。**
+> DRAFT の成果物が無い場合、`/iterate` は生成せずに停止する。
+> 検証と補完のパスであって、生成のパスではないためである。
 
 | # | 検査 | 検出するもの |
 |---|---|---|
@@ -294,7 +298,7 @@ FigJam に整理しながら聴く。**ここは人間の仕事**である。
 
 商談中に止まらなかったぶんの検証を、ここでまとめて払う。
 
-### ⑥ 実装 ―― `/develop`（DV-2）
+### ⑥ 実装 ―― `/build`
 
 `tasks.md`（Bolt 分解 ＋ DoD）→ `index.html` → 検証ゲート3（DoD 照合 ＋ 禁止識別子の grep）→ `README.md`
 
@@ -308,7 +312,7 @@ FigJam に整理しながら聴く。**ここは人間の仕事**である。
 |---|---|---|
 | **FigJam（MCP）** | 商談中にその場で構造化しながら聴く | DRAFT 中 |
 | **直接メモ（引数）** | MCP が使えない／短時間のヒアリング | DRAFT 中 |
-| **外部整理ツール**（NotebookLM 等） | 長時間の録音、複数資料、既存 RFP | DRAFT の前 / DEVELOP 中 |
+| **外部整理ツール**（NotebookLM 等） | 長時間の録音、複数資料、既存 RFP | DRAFT の前 / ITERATE 中 |
 
 外部整理ツールは**商談中には使えない**。アップロードと処理に時間がかかるためである。
 
