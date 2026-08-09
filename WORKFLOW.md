@@ -127,7 +127,10 @@ sequenceDiagram
     participant O as オーケストレータ
     participant P as product-agent
     participant D as design-agent
+    participant Q as quality-agent
 
+    rect rgb(255, 247, 237)
+    Note over U,Q: DRAFT ―― 商談中。止まらない
     U->>O: /draft 案件名 入力ソース
     O->>P: 委譲：利用文脈の抽出
     Note over P: briefing.md<br/>requirements.md（C-1〜C-5）
@@ -136,15 +139,35 @@ sequenceDiagram
     Note over D: design.md（D-00 → D-01/D-02）<br/>screens.md・content.md<br/>Guidelines.md<br/>figma_make_prompt.md
     D-->>O: 完了
     O->>O: advisory スキャン（S-1〜S-4）
-    O-->>U: figma_make_prompt.md 全文
+    Note over O: quality-agent へは委譲しない<br/>コールドスタートで1〜2分失うため
+    O-->>U: figma_make_prompt.md
+    end
+
+    rect rgb(239, 246, 255)
+    Note over U,Q: DEVELOP ―― 商談後。止まる
+    U->>O: /develop
+    O->>Q: 委譲：検証ゲート1・2
+    Note over Q: V-1 矛盾 / V-2 トレーサビリティ<br/>V-3 孤児 / V-4 揺れ<br/>保留指摘の消化
+    Q-->>O: PASS / FAIL
+    O->>D: FAIL があれば差し戻し
+    D-->>O: 再設計
+    O-->>U: 停止・サインオフ待ち
+    end
 ```
 
 ```
-product-agent        design-agent              品質検査
-─────────────        ────────────              ────────
-C-1〜C-5        →    D-01 輝度極性        →    「D-01 は C のどれに由来するか」
-（利用文脈）           D-02 操作アンカー          遡れなければ差し戻し
+product-agent        design-agent            quality-agent
+─────────────        ────────────            ─────────────
+C-1〜C-5        →    D-01 輝度極性      →    「D-01 は C のどれに由来するか」
+（利用文脈）           D-02 操作アンカー        遡れなければ差し戻し
 ```
+
+**`quality-agent` が DRAFT に登場しないのは、意図した設計である。**
+商談中に委譲すると、コールドスタートで1〜2分を失う。
+そこで DRAFT では**オーケストレータ自身が4点だけを高速スキャン**し（解法の混入・機密の平文・
+DOM バインド規約・C-3/C-4 の欠落）、フル検査は DEVELOP で `quality-agent` が行う。
+
+緩めているのは**検査の実行タイミングであって、検査そのものではない。**
 
 ---
 
@@ -213,7 +236,11 @@ FigJam に整理しながら聴く。**ここは人間の仕事**である。
 
 ### ④ 顧客反復（25分・ここが本番）
 
-1. `figma_make_prompt.md` を **Figma Make** に貼る
+1. **Figma Make** へ投入する（`figma_make_prompt.md` の形態は D-00 が決めている）
+   - **自己完結型** ―― プロンプトを貼るだけ。ペースト1回で完結（`screens.md` が無い案件）
+   - **ポインタ型** ―― `screens.md` / `content.md` / `Guidelines.md` / `design.md` / `requirements.md`
+     をアップロードし、読む順序を指示するプロンプトを貼る（画面が複数ある案件）
+   - **`briefing.md` は渡さない。** 生のヒアリング内容を外部サービスへ送らない
 2. 出てきた画面をお客様に見せる
 3. 修正依頼を受ける
 4. **`Guidelines.md` の「変更要求 → トークン写像表」**を経由して、トークンの操作に翻訳する
@@ -244,7 +271,7 @@ FigJam に整理しながら聴く。**ここは人間の仕事**である。
 
 ### ⑤ 検証ゲート ―― `/develop`（DV-1）
 
-ここからは **blocking**。`FAIL` があれば停止して差し戻す。
+ここで初めて **`quality-agent`** が起動する。**blocking** であり、`FAIL` があれば停止して差し戻す。
 
 | # | 検査 | 検出するもの |
 |---|---|---|
