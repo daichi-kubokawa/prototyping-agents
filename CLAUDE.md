@@ -58,6 +58,7 @@ prototyping-agents/
 │       ├── design.md              技術設計（D-00 支配的判断 / ADR: D-01 輝度極性 等）
 │       ├── screens.md             画面仕様・遷移図（複数画面・情報設計が主役のとき）
 │       ├── content.md             画面に出る実文言（コンテンツ駆動型のとき）
+│       ├── figma_output/          Figma Make の最終出力（回収した実物）
 │       ├── Guidelines.md          デザインシステム規約（トークン）
 │       ├── figma_make_prompt.md   Figma Make 連携プロンプト
 │       ├── review_history.md      人間とAIのレビュー履歴・サインオフ証跡
