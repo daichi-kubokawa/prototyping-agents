@@ -9,6 +9,9 @@ local_env.json
 # Local development and temporary logs
 *.local.md
 
+# マシン固有の権限付与（共有する意味がない）
+.claude/settings.local.json
+
 # 生のヒアリング入力（録音の文字起こし、外部整理ツールの出力）
 # 個人情報を含むため Git に載せない
 inputs/
