@@ -2,7 +2,7 @@
 local_env.json
 
 # .env の全バリエーション（Next.js 等の .env.local / .env.production も含む）
-# ただし .env.example（ダミー値のひな形）は追跡してよい
+# ただし .env.example（ダミー値のひな形）は追跡してよい　
 .env*
 !.env.example
 
