@@ -1,0 +1,10 @@
+{
+  "description": "Streamline internal IT inquiries with a centralized management tool that enhances response efficiency and reduces task overlap for IT teams.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
