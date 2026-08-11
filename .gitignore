@@ -30,4 +30,4 @@ _staging/
 # （新しい案件を作っても、ここに追記しない限り Git に載らない）
 examples/*
 !examples/helpdesk-app/
-!examples/night-ops/
+!examples/night-app/
