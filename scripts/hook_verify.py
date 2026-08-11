@@ -4,7 +4,8 @@
 自己点検チェックリストは「指示」であり、静かにサボられうる。
 本フックは「機械が判定できるもの」だけを引き受け、判断が要るものには触れない。
 
-  Guidelines.md   → コントラスト比の検算（check_contrast.py）
+  Guidelines.md   → コントラスト比の検算（check_contrast.py --fix）
+                     比率は自動で埋める。止めるのは実測が要求を下回るときだけ
   実装コード       → 禁止識別子の検出（check_forbidden.py）
 
 違反時は終了コード 2 を返し、内容を Claude に差し戻す。
@@ -20,9 +21,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CODE_EXT = {".html", ".htm", ".js", ".mjs", ".jsx", ".ts", ".tsx", ".vue", ".svelte"}
 
 
-def run(script, path):
+def run(script, *args):
     return subprocess.run(
-        [sys.executable, os.path.join(HERE, script), path],
+        [sys.executable, os.path.join(HERE, script), *args],
         capture_output=True, text=True)
 
 
@@ -44,12 +45,14 @@ def main():
     else:
         return 0
 
-    r = run(script, path)
+    args = [path, "--fix"] if script == "check_contrast.py" else [path]
+    r = run(script, *args)
+    # 比率の記載ずれ（exit 3）は --fix で解消済み。止めるのは本当の違反だけ
     if r.returncode == 1:
         sys.stderr.write((r.stderr or r.stdout).strip() + "\n\n")
         sys.stderr.write(
             "上記は自動検査による検出です。修正してから次へ進んでください。\n"
-            "コントラストは値を変えて再計算し、表の申告値も更新すること。\n")
+            "コントラストは**色値そのもの**を変えること。比率の書き換えでは解決しません。\n")
         return 2  # Claude へ差し戻す
     return 0
 
