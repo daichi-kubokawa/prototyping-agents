@@ -230,7 +230,7 @@ python3 scripts/check_upload_safety.py <OUTPUT_DIR>
 ### DR-2b. advisory スキャン（オーケストレータが自ら実行する）
 
 DR-2 の直後、**サブエージェントへ委譲せず**オーケストレータ自身が走査する。
-`quality-agent` を起動するとコールドスタートで1〜2分失うため、DRAFT では呼ばない。
+`quality-agent` を起動するとコールドスタートで約1〜3分失うため、DRAFT では呼ばない。
 フル検査（V-1〜V-4）は ITERATE パスで `quality-agent` が行う。
 
 | # | 検査 | 見るもの | 検出時 |
