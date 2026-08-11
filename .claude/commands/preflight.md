@@ -112,7 +112,7 @@ python3 scripts/verify_all.py
 2. 設定パラメータ         ❌  OUTPUT_DIR なし
 3. エージェント/knowledge  ✅  3体・11ファイル・リンク切れなし
 4. 出力先の衝突           ✅  なし
-5. 検査スクリプト         ✅  全8件 PASS（exit 0）
+5. 検査スクリプト         ✅  全件 PASS（exit 0）
 6. 権限                  ⚠️  Read/Write/Task が未許可
 ```
 
