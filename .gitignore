@@ -29,4 +29,5 @@ _staging/
 # 案件層は既定で非公開。公開する案件だけを明示的に許可する
 # （新しい案件を作っても、ここに追記しない限り Git に載らない）
 examples/*
-!examples/it-helpdesk/
+!examples/helpdesk-app/
+!examples/night-ops/
