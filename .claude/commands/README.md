@@ -7,7 +7,6 @@ preflight.md  →  /preflight
 draft.md      →  /draft
 log.md        →  /log
 iterate.md    →  /iterate
-build.md      →  /build
 ```
 
 ## 使い分け
@@ -18,9 +17,9 @@ build.md      →  /build
 | `/draft` | **商談中**。ヒアリング直後 | **止まらない** |
 | `/log` | **商談中**。反復のたび | ―（1行追記のみ・数秒） |
 | `/iterate` | **商談後**。検証と補完 | **止まる**（各ゲートでサインオフ待ち） |
-| `/build` | 仕様が固まってから。実装 | **止まる**（検証ゲート3で判定） |
+| `/iterate` | 仕様が固まってから。実装 | **止まる**（検証ゲート3で判定） |
 
-`/iterate` と `/build` は、引数が無ければ `examples/` を一覧表示して選ばせる。
+`/iterate` と `/iterate` は、引数が無ければ `examples/` を一覧表示して選ばせる。
 **案件を切り替えるために `local_env.json` を開く必要はない。**
 
 ```

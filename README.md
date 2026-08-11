@@ -1,5 +1,7 @@
 # 仕様駆動プロトタイピング基盤
 
+[![verify](https://github.com/daichi-kubokawa/prototyping-agents/actions/workflows/verify.yml/badge.svg)](https://github.com/daichi-kubokawa/prototyping-agents/actions/workflows/verify.yml)
+
 お客様と話しながら、その**対話の最中に**仕様を立ち上げ、そのまま画面まで到達させるための仕組みです。
 ヒアリングの内容を入力すると、利用文脈の抽出から設計判断、Figma Make 用プロンプトの生成までが一続きに走ります。
 
@@ -83,7 +85,6 @@
 /draft       # 商談中。止まらずに画面まで走る
 /log         # 商談中。お客様の改修依頼を1行で記録する
 /iterate     # 商談後。検証と補完（案件は一覧から選択）
-/build       # 仕様が固まってから。tasks.md → index.html
 ```
 
 `/draft` は **`<案件名> <入力ソース>`** を引数で受け取ります。
@@ -210,10 +211,15 @@ AI が「WCAG を満たしています」と書いても、それは**自己申�
 このリポジトリでは、機械が判定できるものは機械に判定させます。
 
 ```
-python3 scripts/check_contrast.py examples/<案件名>/Guidelines.md
-python3 scripts/check_forbidden.py examples/<案件名>/
-python3 scripts/check_upload_safety.py examples/<案件名>/
+python3 scripts/verify_all.py                                    # 全部まとめて
+python3 scripts/check_no_hardcode.py                             # 再利用層に具体値が無いか
+python3 scripts/check_contrast.py examples/<案件名>/Guidelines.md  # WCAG 比率の再計算
+python3 scripts/check_forbidden.py examples/<案件名>/              # 禁止識別子
+python3 scripts/check_upload_safety.py examples/<案件名>/          # 外部送信の安全性
 ```
+
+**この4本は push のたびに GitHub Actions で走ります。** 冒頭のバッジがその結果です。
+フックは書いた瞬間に、CI は残った瞬間に検出します。
 
 前者は `Guidelines.md` のカラートークンを読み、**WCAG の相対輝度から比率を再計算**して、
 申告値との一致と要求値（本文 4.5:1 ／ 非テキスト 3.0:1）の充足を判定します。
@@ -222,6 +228,9 @@ python3 scripts/check_upload_safety.py examples/<案件名>/
 
 これは実際に必要でした。開発中、境界線のコントラストが **2.52:1**（WCAG 1.4.11 の 3:1 未満）
 だった箇所を手作業で見つけています。手で見つけたということは、**次は見逃す**ということです。
+
+`check_no_hardcode.py` は、**このリポジトリで最も重大とされる違反**を機械で判定します。
+再利用層の散文に色値や既定書体名が現れたら FAIL です。原則を掲げるだけでなく、破れないようにしています。
 
 3つ目は、外部サービスへ渡すファイルに生の発言や実URLが残っていないかを検査します。
 実際にこれで、`briefing.md` の発言引用が `content.md` へ転記されていた箇所を11件検出しました。

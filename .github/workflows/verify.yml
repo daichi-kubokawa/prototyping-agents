@@ -1,0 +1,20 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    name: 決定論的検査
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # 検査は標準ライブラリのみで動く。依存パッケージは持たない
+      - name: 検査を実行する
+        run: python3 scripts/verify_all.py

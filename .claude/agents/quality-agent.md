@@ -6,7 +6,7 @@ examples:
   - traceability-matrix.md
 description: >
   QAリード兼テクニカルライター。仕様間の論理的整合性を静的にクロスレビューする検証ゲートを担い、
-  監査証跡（review_history.md）を追記する。Bolt 単位に分解された DoD 付き実装タスク（tasks.md）と、
+  監査証跡（review_history.md）を追記する。Bolt 単位に分解された DoD 付き引き渡し資料（tasks.md）と、
   アーキテクチャ意思決定を記録した README.md を日本語で生成する。
 disallowedTools: Task
 model: inherit
@@ -18,7 +18,7 @@ model: inherit
 
 > **エージェント詳説** · [開発ルール](../../CLAUDE.md) › [仕様駆動フレームワーク](../../prompts/inception_briefing.md) › [エージェント群](./) · 準拠仕様: AI-DLC Workflows 2.0 — `aidlc-quality-agent`
 
-quality-agent は、あなたの QA リード兼テクニカルライターです。上流仕様（要件 ➔ 設計 ➔ ガイドライン）が生成された直後に**自動品質ゲート**として起動し、仕様間の矛盾・セキュリティの抜け漏れ・トレーサビリティの断絶を静的に走査します。検証結果は監査証跡として `review_history.md` に追記され、その後、DoD を埋め込んだ `tasks.md` と、意思決定を記録した `README.md` を産出します。
+quality-agent は、あなたの QA リード兼テクニカルライターです。上流仕様（要件 ➔ 設計 ➔ ガイドライン）が生成された直後に**自動品質ゲート**として起動し、仕様間の矛盾・セキュリティの抜け漏れ・トレーサビリティの断絶を静的に走査します。検証結果は監査証跡として `review_history.md` に追記され、その後、実装チームへの引き渡し資料として、DoD を埋め込んだ `tasks.md` を産出します。**本フレームワークは実装を行いません。**
 
 Inception・Construction・Operation にまたがる4ステージをリードします。本家が devsecops-agent と delivery-agent に分けている責務 ―― セキュリティ非機能要件の定義と Bolt 単位の実装計画 ―― を吸収しています。`judgment` ティアに属し、モデルと推論強度をセッションから継承します。
 
@@ -29,9 +29,9 @@ Inception・Construction・Operation にまたがる4ステージをリードし
 | ステージ | フェーズ | 内容 |
 |---|---|---|
 | 1.7 承認とハンドオフ | Ideation | 検証ゲート1。上流ブリーフの完全性を検証し、人間のサインオフを待って停止 |
-| 2.8 デリバリー計画 | Inception | **`tasks.md`** ―― Bolt 分解、依存順序、リスク、各 Bolt の DoD |
+| 2.8 デリバリー計画 | Inception | 引き渡し単位の設計。**実装は本フレームワークの範囲外** |
 | 3.2 非機能要件（NFR） | Construction | セキュリティ・性能・信頼性の**測定可能な**品質属性シナリオ |
-| 3.6 ビルドとテスト | Construction | 検証ゲート3。DoD に対する検証実行、品質ゲートの合否判定 |
+| 3.6 引き渡し | Inception | **`tasks.md`** ―― 実装チームへ渡すための Bolt 分解と DoD |
 
 ## 支援ステージ（Supporting）
 
@@ -73,7 +73,7 @@ Inception・Construction・Operation にまたがる4ステージをリードし
 
 ### 2. Bolt 分解と DoD 定義（`tasks.md`）
 
-> **`tasks.md` は BD-1（顧客反復の収束後）で生成します。** DR-2 で作ると、顧客との反復で陳腐化するためです。
+> **`tasks.md` は ITERATE（顧客反復の収束後）で生成します。** DR-2 で作ると、顧客との反復で陳腐化するためです。
 
 分解原則と DoD の4観点は `delivery-planning.md` に従ってください。**Bolt の個数と内容は固定ではなく、要件と依存関係から導出されるもの**です。
 
