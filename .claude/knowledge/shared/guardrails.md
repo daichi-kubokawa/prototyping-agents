@@ -89,7 +89,39 @@ Git 公開時の漏洩リスクを物理的に遮断することが目的であ�
 1. `briefing.md` → 2. `requirements.md` → 3. `design.md` → 4. `Guidelines.md`
 → 5. `figma_make_prompt.md` → 6. `tasks.md` → 7. `README.md`
 
-## 7. 知識源の優先順位（何を根拠に判断するか）
+## 7. 識別子の名前空間（取り違え禁止）
+
+本フレームワークは10系統の識別子を使う。**接頭辞が違えば別の体系である。**
+参照するときは、必ず下表で系統を確認すること。
+
+| 接頭辞 | 体系 | 例 | 定義場所 |
+|---|---|---|---|
+| `C-n` | 利用文脈（ISO 9241-11） | C-3 装置 / C-4 物理環境 | `context-of-use.md` |
+| `M-n` | Must Have（要件） | M-3 | `requirements-template.md` |
+| `OQ-n` | Open Question | OQ-1 | `requirements-template.md` |
+| `D-n` | 設計判断の ADR | D-01 輝度極性 / D-04 技術構成 | `artifact-templates.md` |
+| `T-n` | 表示文字列 | T-01 | `screen-specification.md` |
+| `P-n` | **審美の禁則** | P-2 既定書体の禁止 | `aesthetic-guardrails.md` |
+| `S-n` | DRAFT の advisory スキャン | S-5 送信安全性 | `inception_briefing.md` DR-2b |
+| `V-n` | 検証ゲートの検査 | V-3 孤児成果物 | `verification-protocol.md` |
+| `DR-n` | DRAFT の実行ステップ | DR-2b | `inception_briefing.md` |
+| `IT-n` | ITERATE の実行ステップ | IT-1 | `inception_briefing.md` |
+
+### 実際に起きた取り違え
+
+```
+❌  根拠となる利用文脈: … C-2「対応履歴の参照」（由来 P-5, P-6）
+```
+
+`P-n` は審美の禁則であり、要件ではない。**要件を指すなら `M-n`** である。
+同様に、`D-03` を技術構成の意味でも使っていた時期があり、同一文書内で2つの意味を持つ事故が起きた。
+
+**根拠として識別子を引くときは、引用元のファイルを開いて実在を確かめること。**
+記憶で番号を書かない。**存在しない番号を引いた根拠は、根拠が無いのと同じである。**
+
+---
+
+## 8. 知識源の優先順位（何を根拠に判断するか）
 
 §6 は「**文書間**の矛盾」を解く序列である。本節は「**知識源**の矛盾」を解く序列を定める。
 
@@ -133,7 +165,7 @@ knowledge の各ファイルは冒頭に `type` / `sources` / `original` を持�
 
 ---
 
-## 8. 越権の禁止
+## 9. 越権の禁止
 
 - Task ツールによるサブエージェントの起動を行わない（委譲はオーケストレータの責務）
 - ビルド環境の構築、依存パッケージのインストール、コードのコンパイル・実行を勝手に行わない

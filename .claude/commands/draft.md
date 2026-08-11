@@ -92,7 +92,13 @@ $ARGUMENTS
 
 `inception_briefing.md` の **DRAFT パス（DR-1 → DR-2 → DR-3）** を実行する。
 
-- 各工程は Task ツールで担当サブエージェント（`product-agent` / `design-agent`）へ委譲する
+- **委譲は2回だけ。** `product-agent` に1回（`briefing` → `requirements`）、
+  `design-agent` に1回（`design` → `screens`/`content` → `Guidelines` → `figma_make_prompt`）。
+  **成果物ごとに呼び直さない。** 委譲1回あたり約1〜3分のコールドスタートが乗る
+- 委譲時は、`artifact-templates.md` / `requirements-template.md` の
+  **DRAFT 列と行数の目安を必ず本文に書いて渡す**。渡さないと完全版の構成で書かれる
+- `product-agent` が返ったら、**`design-agent` へ渡す前に** S-5 を実行する
+  （上流で直せば1箇所で済む）
 - **一切停止しない。** 確認を求めず、承認を待たず、DR-2 の完了まで走り切る
 - 検証は **advisory**。`FAIL` は `review_history.md` の `## 保留指摘（DRAFT）` へ追記して次へ進む。差し戻しも再生成もしない
 - `FIGJAM_URL` の MCP 接続は **2回失敗したら即座に `RAW_HEARING_MEMO` へフォールバック**する。接続で粘らない

@@ -57,6 +57,22 @@ product-agent は、あなたのプロダクトマネージャー兼ビジネス
 > `frontend-security.md` は意図的に読み込まない。DOM バインドは設計層の関心事であり、
 > 要件側が触れると層の侵犯を誘発するため。
 
+## 1回の起動で作るもの（DRAFT パス）
+
+**あなたは成果物ごとに呼び直されません。** 1回の起動で、以下を**この順に**生成します。
+
+```
+briefing.md      ヒアリングの原点（SSoT）
+  ↓ これを読んでから
+requirements.md  利用文脈 C-1〜C-5 / Must Have / Open Questions
+```
+
+`requirements.md` は `briefing.md` を**読み直してから**書くこと。記憶で書かない。
+
+**`briefing.md` の記述を `requirements.md` へ引用の形で転記しないこと。**
+`briefing.md` は外部サービスへ渡さないが、`requirements.md` は渡す。
+中身が移動すれば、遮断したことにならない（`guardrails.md` §2）。
+
 ## 期待される振る舞い（What to Expect）
 
 product-agent が起動しているとき、あなたはプロジェクトの目標・対象ユーザー・優先度・制約について、構造化された問いを受け取ります。曖昧さを表面化させ、欠落を埋めるための的を絞った質問を行い、**容赦なく優先順位を付けます**。
