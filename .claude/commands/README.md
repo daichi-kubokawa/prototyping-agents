@@ -17,9 +17,8 @@ iterate.md    →  /iterate
 | `/draft` | **商談中**。ヒアリング直後 | **止まらない** |
 | `/log` | **商談中**。反復のたび | ―（1行追記のみ・数秒） |
 | `/iterate` | **商談後**。検証と補完 | **止まる**（各ゲートでサインオフ待ち） |
-| `/iterate` | 仕様が固まってから。実装 | **止まる**（検証ゲート3で判定） |
 
-`/iterate` と `/iterate` は、引数が無ければ `examples/` を一覧表示して選ばせる。
+`/iterate` は、引数が無ければ `examples/` を一覧表示して選ばせる。
 **案件を切り替えるために `local_env.json` を開く必要はない。**
 
 ```
@@ -64,7 +63,7 @@ DR-3（顧客反復）で使う。**所要時間は前行との差から自動�
 ① /draft と打つ           → commands/draft.md の本文が展開される
 ② 本文が手順書を読ませる    → prompts/inception_briefing.md
 ③ 手順に沿って実行          → DR-1 → DR-2 → DR-3
-④ Task で委譲              → ../agents/ の3体
+④ Task で委譲              → ../agents/ へ2回（product / design）
 ⑤ 方法論を読む             → ../knowledge/
 ```
 

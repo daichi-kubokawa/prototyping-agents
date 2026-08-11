@@ -9,9 +9,9 @@ Claude Code が起動時に読み込み、サブエージェントとして登�
 
 | ファイル | 役割 | 主な成果物 |
 |---|---|---|
-| `product-agent.md` | AI Product Manager | `requirements.md` ―― 利用文脈 C-1〜C-5 とスコープ |
-| `design-agent.md` | AI Technical Lead & UX Designer | `design.md`（ADR）/ `Guidelines.md` / `figma_make_prompt.md` |
-| `quality-agent.md` | AI QA Lead & Technical Writer | `review_history.md` / `tasks.md` / `README.md` |
+| `product-agent.md` | AI Product Manager | `briefing.md` / `requirements.md` ―― 利用文脈 C-1〜C-5 とスコープ |
+| `design-agent.md` | AI Technical Lead & UX Designer | `design.md`（ADR）/ `screens.md` / `content.md` / `Guidelines.md` / `figma_make_prompt.md` |
+| `quality-agent.md` | AI QA Lead & Technical Writer | `review_history.md` / `tasks.md`（引き渡し資料） |
 
 本家 AI-DLC の11体構成を3体に集約している。`design-agent` が architect の設計権限を、
 `quality-agent` が devsecops と delivery の責務を吸収する。
@@ -21,7 +21,7 @@ Claude Code が起動時に読み込み、サブエージェントとして登�
 
 ## 受け渡しの契約
 
-3体は以下の記号で会話する。**この鎖が切れると設計が導出できない。**
+3体は以下の記号で会話する。**この鎖が切れると設計が導出できない。** 委譲は1エージェントにつき1回にまとめる。
 
 ```
 product-agent          design-agent            quality-agent

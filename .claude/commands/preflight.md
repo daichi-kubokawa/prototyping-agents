@@ -73,7 +73,7 @@ python3 scripts/verify_all.py
 
 | 状態 | 判定 |
 |---|---|
-| `verify_all.py` が終了コード 0 | ✅ |
+| `verify_all.py` が終了コード 0 | ✅ 件数はそのまま報告する |
 | 案件が無く SKIP のみ | ✅（初回はこれで正常） |
 | Python が無い／スクリプトが例外で落ちる | ❌ **商談前に直す** |
 | 既存案件で FAIL がある | ⚠️ 前回の未解消。内容を1行で報告する |
@@ -112,7 +112,7 @@ python3 scripts/verify_all.py
 2. 設定パラメータ         ❌  OUTPUT_DIR なし
 3. エージェント/knowledge  ✅  3体・11ファイル・リンク切れなし
 4. 出力先の衝突           ✅  なし
-5. 検査スクリプト         ✅  4本 PASS（exit 0）
+5. 検査スクリプト         ✅  全8件 PASS（exit 0）
 6. 権限                  ⚠️  Read/Write/Task が未許可
 ```
 
