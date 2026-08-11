@@ -1,0 +1,10 @@
+{
+  "description": "Streamline IT support with a collaborative platform for managing multiple inquiries, tracking progress, and facilitating seamless handovers.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

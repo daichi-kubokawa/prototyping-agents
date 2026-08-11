@@ -1,0 +1,10 @@
+{
+  "description": "This application enables night shift operators to efficiently monitor and document server operations, ensuring timely responses and accurate record-keeping.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

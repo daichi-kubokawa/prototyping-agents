@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --bg: #17181C;
+  --fg: #ECEAE6;
+  --fg-muted: #A9ACB3;
+  --border: #6C6F77;
+  --accent: #4FA8A0;
+  --accent-alert: #E0993F;
+  --space-inner: 8px;
+  --space-outer: 24px;
+  --font-size-heading: 20px;
+  --font-size-body: 16px;
+  --font-size-caption: 14px;
+  --target-primary-h: 56px;
+  --target-primary-w: 220px;
+  --target-choice-h: 44px;
+  --target-choice-w: 184px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: "BIZ UDPGothic", "Yu Gothic UI", sans-serif;
+  font-size: var(--font-size-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+textarea {
+  font-family: "BIZ UDPGothic", "Yu Gothic UI", sans-serif;
+}
+
+button {
+  font-family: "BIZ UDPGothic", "Yu Gothic UI", sans-serif;
+}

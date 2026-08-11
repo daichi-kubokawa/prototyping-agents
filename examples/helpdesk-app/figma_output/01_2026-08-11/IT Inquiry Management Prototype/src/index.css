@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --bg: #F7F7F5;
+  --fg: #1B1B1D;
+  --fg-secondary: #54545A;
+  --border: #6E6E72;
+  --accent: #B42318;
+  --accent-fg: #FFFFFF;
+
+  --font-size-heading: 20px;
+  --font-size-body: 15px;
+  --font-size-caption: 13px;
+
+  --space-inner: 8px;
+  --space-outer: 20px;
+
+  --target-primary-h: 40px;
+  --target-primary-w: 160px;
+  --target-choice-h: 36px;
+  --target-choice-w: 96px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'IBM Plex Sans JP', sans-serif;
+  font-size: var(--font-size-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+dd {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
